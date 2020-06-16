@@ -3,7 +3,6 @@ import { Router } from '@angular/router';
 import { User } from 'src/models/user';
 import { UserService } from 'src/services/User/user.service';
 
-
 @Component({
   selector: 'app-admin',
   templateUrl: './admin.component.html',
@@ -24,6 +23,13 @@ export class AdminComponent implements OnInit {
     })
   }
 
+  approveUser(){
+
+  }
+
+  removeUser(){
+
+  }
 
 
 }

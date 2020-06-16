@@ -1,19 +1,43 @@
-<table class="table table-striped">
+<div id="title">List of all users</div>
+<table class= "table">
   <tr>
-    <td>Username</td>
-    <td>Approved by admin</td>
-    <td>Type</td>
+    <th>Username</th>
+    <th>Status</th>
+    <th>Type</th>
+    <th>Approvals</th>
+    <th>Edit</th>
+    <th>Delete</th>
   </tr>
+
   <tr *ngFor="let u of users">
     <td>{{u.username}}</td>
     <td>
-      <div *ngIf="u.approvedByAdmin">Approved</div>
-      <div *ngIf="!u.approvedByAdmin">Not approved</div>
-    </td>
-    <td>
       <div *ngIf="u.type == 0">Admin</div>
       <div *ngIf="u.type == 1">Enterprise</div>
-      <div *ngIf="u.type == 0">Farmer</div>
+      <div *ngIf="u.type == 2">Farmer</div>
+    </td>
+    <td>
+      <div *ngIf="u.approvedByAdmin">Approved</div>
+      <div *ngIf="!u.approvedByAdmin">Pending</div>
+    </td>
+    <td>
+      <button class="btn btn-success btn-large" (click)="approveUser()">Accept</button>
+      <button class="btn btn-danger btn-large" (click)="removeUser()">Decline</button>
+    </td>
+    <td>
+      <a href="">Edit</a>
+    </td>
+    <td>
+      <button class="btn btn-danger">&#10006;</button>
+    </td>
+  </tr>
+
+  <tr>
+    <td>
+      <button class="btn btn-large btn-primary">Add new user</button>
     </td>
   </tr>
 </table>
+
+
+

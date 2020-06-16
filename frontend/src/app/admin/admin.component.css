@@ -1,0 +1,13 @@
+.table{
+  width: 80%;
+  padding:20px;
+}
+
+#title{
+  text-align: center;
+  width:80%;
+  background-color: gray;
+  padding: 20px;
+  font-size: 30px;
+  font-style: bold;
+}
