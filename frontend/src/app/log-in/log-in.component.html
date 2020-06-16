@@ -1,0 +1,19 @@
+<form (ngSubmit) = "logInUser(logInFrom)" #logInFrom = "ngForm">
+  <div class="form-group">
+    Username: <input type="text"
+              name="username"
+              [(ngModel)]="username"
+              required>
+  </div>
+  <div class="form-group">
+    Password: <input type="password"
+              name="password"
+              [(ngModel)]="password"
+              required>
+  </div>
+  <button type = "submit" class="btn btn-success" [disabled]="!logInFrom.form.valid">Log in</button>
+</form>
+
+<p id="errorMessage">
+  {{message}}
+</p>

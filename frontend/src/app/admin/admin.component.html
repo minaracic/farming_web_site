@@ -1,0 +1,19 @@
+<table class="table table-striped">
+  <tr>
+    <td>Username</td>
+    <td>Approved by admin</td>
+    <td>Type</td>
+  </tr>
+  <tr *ngFor="let u of users">
+    <td>{{u.username}}</td>
+    <td>
+      <div *ngIf="u.approvedByAdmin">Approved</div>
+      <div *ngIf="!u.approvedByAdmin">Not approved</div>
+    </td>
+    <td>
+      <div *ngIf="u.type == 0">Admin</div>
+      <div *ngIf="u.type == 1">Enterprise</div>
+      <div *ngIf="u.type == 0">Farmer</div>
+    </td>
+  </tr>
+</table>
