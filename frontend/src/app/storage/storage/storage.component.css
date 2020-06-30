@@ -1,0 +1,22 @@
+.table{
+  width: 80%;
+  padding:20px;
+  margin-left: auto;
+  margin-right: auto;
+}
+
+#title{
+  text-align: center;
+  width:80%;
+  background-color: gray;
+  padding: 20px;
+  font-size: 30px;
+  font-style: bold;
+  margin-left: auto;
+  margin-right: auto;
+}
+
+.btn{
+  margin: 2px;
+  font-size: 12px;
+}

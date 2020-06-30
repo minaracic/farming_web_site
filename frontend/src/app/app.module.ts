@@ -16,6 +16,8 @@ import { EditEnterpriseComponent } from './edit-enterprise/edit-enterprise.compo
 import { EditFarmerComponent } from './edit-farmer/edit-farmer.component';
 import { GardensOverviewComponent } from './gardens-overview/gardens-overview.component';
 import { GardenDetailsComponent } from './garden-details/garden-details.component';
+import { SeedProgressComponent } from './seed-progress/seed-progress.component';
+import { StorageComponent } from './storage/storage/storage.component';
 
 
 @NgModule({
@@ -28,7 +30,9 @@ import { GardenDetailsComponent } from './garden-details/garden-details.componen
     EditEnterpriseComponent,
     EditFarmerComponent,
     GardensOverviewComponent,
-    GardenDetailsComponent
+    GardenDetailsComponent,
+    SeedProgressComponent,
+    StorageComponent
   ],
   imports: [
     BrowserModule,

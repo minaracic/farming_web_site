@@ -16,6 +16,14 @@ export class GardenService {
     return this.http.post(`${Constats.URI}/getGardensByOwner`, req);
   }
 
+  getGarden(owner: string, gardenName: string){
+    let req = {
+      owner: 'farmer1',
+      garden: gardenName
+    };
+    return this.http.post(`${Constats.URI}/getGarden`, req);
+  }
+
   incWaterInGarden(gardenName: string){
     console.log(gardenName);
     let req = {
@@ -47,5 +55,21 @@ export class GardenService {
       garden: gardenName
     };
     return this.http.post(`${Constats.URI}/decTmpInGarden`, req);
+  }
+
+  getAllMySeeds(owner:string, gardenName:string){
+    let req = {
+      owner: 'farmer1',
+      garden: gardenName
+    };
+    return this.http.post(`${Constats.URI}/getAllGardensSeeds`, req);
+  }
+
+  getMyStorage(gardenId: String){
+    let req = {
+      gardenId: gardenId
+    };
+
+    return this.http.post(`${Constats.URI}/getStorageArticles`, req);
   }
 }

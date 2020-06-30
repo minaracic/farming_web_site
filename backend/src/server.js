@@ -7,6 +7,7 @@ const Farmer = require("../models/farmer");
 const Enterprise = require("../models/enterprise");
 const Garden = require("../models/garden");
 const Seed = require("../models/seed");
+const ArticlInStorage = require("../models/articlInStorage");
 
 const app = express();
 
@@ -251,5 +252,43 @@ app.post("/getAllSeeds", (req, res)=>{
     });
 });
 
+app.post("/getGarden", (req, res)=>{
+    let owner = req.body.owner;
+    let gardenName = req.body.garden;
+    
+    Garden.find({owner: owner, name: gardenName}).then(doc=>{
+        res.json({
+            garden: doc[0]
+        })
+    });
+});
+
+app.post("/getAllGardensSeeds", (req, res)=>{
+    let owner = req.body.owner;
+    let gardenName = req.body.garden;
+    
+    Seed.find({owner: owner, garden: gardenName}).then(doc=>{
+        res.json({
+            seeds: doc
+        })
+    });
+});
+
+app.post("/deleteSeedFromGarden", (req, res)=>{
+  let id = req.body.id;
+  let o = mongoose.Types.ObjectId(id);
+  Seed.findByIdAndDelete(o).then(doc=>{
+  });
+});
+
+app.post("/getStorageArticles", (req, res)=>{
+  let gardenId = req.body.gardenId;
+  let o = mongoose.Types.ObjectId(gardenId);
+  ArticlInStorage.find({gardenId: o}).then(data=>{
+    res.json({
+      articles: data
+    });
+  })
+})
 
 app.listen(4000, () => console.log(`Express server running on port 4000`));

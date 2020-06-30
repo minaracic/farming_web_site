@@ -8,6 +8,8 @@ import { EditEnterpriseComponent } from './edit-enterprise/edit-enterprise.compo
 import { EditFarmerComponent } from './edit-farmer/edit-farmer.component';
 import { GardensOverviewComponent } from './gardens-overview/gardens-overview.component';
 import { GardenDetailsComponent } from './garden-details/garden-details.component';
+import { SeedProgressComponent } from './seed-progress/seed-progress.component';
+import { StorageComponent } from './storage/storage/storage.component';
 
 
 const routes: Routes = [
@@ -18,7 +20,10 @@ const routes: Routes = [
   {path: 'editEnterprise', component: EditEnterpriseComponent},
   {path: 'editFarmer', component: EditFarmerComponent},
   {path: 'gardensOverview', component: GardensOverviewComponent},
-  {path: 'gardenDetails', component: GardenDetailsComponent}
+  {path: 'gardenDetails', component: GardenDetailsComponent},
+  {path: 'seedProgress', component: SeedProgressComponent},
+  {path: 'storage', component: StorageComponent}
+
 ];
 
 @NgModule({

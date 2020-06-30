@@ -1,4 +1,5 @@
 export interface Garden{
+  _id: String,
   owner: String,
   name: String,
   place: String,

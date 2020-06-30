@@ -1,16 +1,38 @@
 <div id="title">{{gardenName}}</div>
+<div id ="subtitle">
+  <p>Water[L]: {{water}}</p>
+  <p>Temperature[C]:{{tmp}}</p>
+</div>
+
 <table class= "table">
-    <tr>
-    <th>Water[L]: {{water}}</th>
-    <th>Temperature[C]:{{tmp}}</th>
+
+  <tr *ngFor='let row of seeds'>
+    <td *ngFor = 'let seed of row'>
+      <div id = "readyToHarvest"
+          (mouseover) = "confirmToHarvest(seed)"
+          *ngIf='seed != null && seed.progress == seed.totalGrowDays && !seed.harvested'>
+        Ready to harvest
+      </div>
+      <div id = "inProgress"
+        *ngIf='seed != null && seed.progress != seed.totalGrowDays'
+        (mouseover)="seedDetails(seed, $event)">
+        {{seed.name}}
+      </div>
+      <div id = "harvested"
+        *ngIf='seed != null && seed.progress == seed.totalGrowDays && seed.harvested'>
+        X
+      </div>
+      <div id = "emptyPlace" *ngIf='seed == null'>
+        Empty
+      </div>
+    </td>
   </tr>
-
-
   <tr>
-    <!-- <td colspan="10" >
-      <button class="btn btn-large btn-primary" (click)="addNewEnterprise()">Add new enterprise</button>
-      <button class="btn btn-large btn-primary" (click)="addNewFarmer()">Add new farmer</button>
-    </td> -->
+    <td colspan="10">
+      <button id ="storageBtn"
+              class="btn btn-large btn-info"
+              (click)="getMyStorage()">Storage</button>
+    </td>
   </tr>
 </table>
 
