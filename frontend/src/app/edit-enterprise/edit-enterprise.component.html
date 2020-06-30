@@ -1,0 +1,56 @@
+<form (ngSubmit) = "saveChanges(registrationFrom)" #registrationFrom = "ngForm">
+  <div class="form-group">
+    <label>Company name</label>
+    <input class="form-control"
+          id="name"
+          placeholder="Company name"
+          required
+          [(ngModel)]="companyName"
+          name="companyName">
+  </div>
+  <div class="form-group">
+    <label>Short company name(username)</label>
+    <input class="form-control"
+          id="surname"
+          placeholder="Enter username"
+          [(ngModel)]="username"
+          name="username"
+          readonly
+          >
+  </div>
+  <div class="form-group">
+    <label>Date of creation</label>
+    <input type="date"
+          class="form-control"
+          id="dateOfCreation"
+          placeholder="Date of creation"
+          [(ngModel)]="dateOfCreation"
+          name="dateOfCreation"
+          required>
+  </div>
+  <div class="form-group">
+    <label>Address</label>
+    <input class="form-control"
+          id="Address"
+          placeholder="Address"
+          [(ngModel)]="address"
+          name="address"
+          required>
+  </div>
+  <div class="form-group">
+    <label>Email</label>
+    <input type="email"
+          class="form-control"
+          id="email"
+          placeholder="Email"
+          [(ngModel)]="email"
+          name="email"
+          required>
+  </div>
+  <button type="submit" class="btn btn-primary" [disabled]="!registrationFrom.form.valid">Save</button>
+</form>
+
+<p id="errorMessage">
+  {{errorMsg}}
+</p>
+

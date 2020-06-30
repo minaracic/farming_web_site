@@ -6,7 +6,7 @@ const farmerSchema = mongoose.Schema({
   password:String,
   name: String,
   surname: String,
-  dateOfBirth: String,
+  dateOfBirth: Date,
   placeOfBirth: String,
   phone: String,
   email: String

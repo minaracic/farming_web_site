@@ -1,0 +1,48 @@
+<div id="title">My gardens</div>
+<table class= "table">
+  <tr>
+    <th>Garden name</th>
+    <th>Place</th>
+    <th>Total seeds</th>
+    <th>Number of used seeds</th>
+    <th>Water[L]</th>
+    <th>Temperature[C]</th>
+  </tr>
+
+  <tr *ngFor="let g of gardens">
+    <td>{{g.name}}</td>
+    <td>
+      {{g.place}}
+    </td>
+    <td>
+      {{g.totalSeeds}}
+    </td>
+    <td>
+      {{g.numOfUsedSeeds}}
+
+    </td>
+    <td>
+      {{g.water}}
+      <button class="btn btn-large btn-success" (click)="incWaterInGarden(g.name)">&#43;</button>
+      <button class="btn btn-large btn-warning" (click)="decWaterInGarden(g.name)">&#45;</button>
+    </td>
+    <td>
+      {{g.temperature}}
+      <button class="btn btn-large btn-success" (click)="incTmpInGarden(g.name)">&#43;</button>
+      <button class="btn btn-large btn-warning" (click)="decTmpInGarden(g.name)">&#45;</button>
+    </td>
+    <td>
+      <button class="btn btn-large btn-info" (click)="getGardenDetails(g.name, g.owner, g.temperature, g.water)">Details</button>
+    </td>
+  </tr>
+
+  <tr>
+    <!-- <td colspan="10" >
+      <button class="btn btn-large btn-primary" (click)="addNewEnterprise()">Add new enterprise</button>
+      <button class="btn btn-large btn-primary" (click)="addNewFarmer()">Add new farmer</button>
+    </td> -->
+  </tr>
+</table>
+
+
+

@@ -1,9 +1,12 @@
 const mongoose =  require('mongoose');
-
-//blueprint 
+ 
 const enterpriseSchema = mongoose.Schema({
+    companyName: String,
     username: String,
-    password: String
+    password: String,
+    dateOfCreation: Date,
+    address: String,
+    email: String
 });
 
 module.exports = mongoose.model("Enterprise", enterpriseSchema);

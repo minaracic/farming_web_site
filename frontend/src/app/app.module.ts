@@ -10,13 +10,25 @@ import { LogInComponent } from './log-in/log-in.component';
 import { AdminComponent } from './admin/admin.component';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import {MatTableModule} from '@angular/material/table';
+import { RegistrateFarmerComponent } from './registrate-farmer/registrate-farmer.component';
+import { RegistrateEnterpriseComponent } from './registrate-enterprise/registrate-enterprise.component';
+import { EditEnterpriseComponent } from './edit-enterprise/edit-enterprise.component';
+import { EditFarmerComponent } from './edit-farmer/edit-farmer.component';
+import { GardensOverviewComponent } from './gardens-overview/gardens-overview.component';
+import { GardenDetailsComponent } from './garden-details/garden-details.component';
 
 
 @NgModule({
   declarations: [
     AppComponent,
     AdminComponent,
-    LogInComponent
+    LogInComponent,
+    RegistrateFarmerComponent,
+    RegistrateEnterpriseComponent,
+    EditEnterpriseComponent,
+    EditFarmerComponent,
+    GardensOverviewComponent,
+    GardenDetailsComponent
   ],
   imports: [
     BrowserModule,

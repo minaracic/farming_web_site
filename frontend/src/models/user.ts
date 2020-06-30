@@ -3,5 +3,5 @@ export interface User{
   username: String,
   password: String,
   type: number,
-  approvedByAdmin: number
+  approvedByAdmin: boolean
 }

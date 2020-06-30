@@ -21,20 +21,21 @@
       <div *ngIf="!u.approvedByAdmin">Pending</div>
     </td>
     <td>
-      <button class="btn btn-success btn-large" (click)="approveUser()">Accept</button>
-      <button class="btn btn-danger btn-large" (click)="removeUser()">Decline</button>
+      <button class="btn btn-success btn-large" (click)="approveUser(u.username)">Accept</button>
+      <button class="btn btn-danger btn-large" (click)="deleteUser(u.username)">Decline</button>
     </td>
     <td>
-      <a href="">Edit</a>
+      <button (click)="editUser(u.username, u.type)" href="">Edit</button>
     </td>
     <td>
-      <button class="btn btn-danger">&#10006;</button>
+      <button class="btn btn-danger" (click)="deleteUser(u.username)">&#10006;</button>
     </td>
   </tr>
 
   <tr>
-    <td>
-      <button class="btn btn-large btn-primary">Add new user</button>
+    <td colspan="10" >
+      <button class="btn btn-large btn-primary" (click)="addNewEnterprise()">Add new enterprise</button>
+      <button class="btn btn-large btn-primary" (click)="addNewFarmer()">Add new farmer</button>
     </td>
   </tr>
 </table>
