@@ -36,4 +36,12 @@ export class EnterpriseService {
 
     return this.http.post(`${Constats.URI}/updateEnterprise`, req);
   }
+
+  getById(id: string){
+    let req = {
+      id: id
+    };
+
+    return this.http.post(`${Constats.URI}/getEnterpriseById`, req);
+  }
 }

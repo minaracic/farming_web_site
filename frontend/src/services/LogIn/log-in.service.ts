@@ -25,7 +25,7 @@ export class LogInService {
       username: user.username,
       type: user.type
     }
-    return this.http.post(`${Constats.URI}/getUser`, req);
+    return this.http.post(`${Constats.URI}/getUsername`, req);
 
   }
 

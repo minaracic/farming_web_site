@@ -10,6 +10,9 @@ import { GardensOverviewComponent } from './gardens-overview/gardens-overview.co
 import { GardenDetailsComponent } from './garden-details/garden-details.component';
 import { SeedProgressComponent } from './seed-progress/seed-progress.component';
 import { StorageComponent } from './storage/storage/storage.component';
+import { ShopComponent } from './shop/shop.component';
+import { OrderService } from 'src/services/order/order.service';
+import { OrdersPreviewComponent } from './orders-preview/orders-preview.component';
 
 
 const routes: Routes = [
@@ -22,7 +25,9 @@ const routes: Routes = [
   {path: 'gardensOverview', component: GardensOverviewComponent},
   {path: 'gardenDetails', component: GardenDetailsComponent},
   {path: 'seedProgress', component: SeedProgressComponent},
-  {path: 'storage', component: StorageComponent}
+  {path: 'storage', component: StorageComponent},
+  {path: 'shop', component: ShopComponent},
+  {path: 'ordersPreview', component: OrdersPreviewComponent},
 
 ];
 

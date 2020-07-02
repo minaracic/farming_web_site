@@ -8,6 +8,8 @@ const Enterprise = require("../models/enterprise");
 const Garden = require("../models/garden");
 const Seed = require("../models/seed");
 const ArticlInStorage = require("../models/articlInStorage");
+const Articl = require("../models/articl");
+const Order = require("../models/order");
 
 const app = express();
 
@@ -98,6 +100,18 @@ app.post("/getUser", (req, res)=>{
             break;
     }
   
+});
+
+app.post("/getUsername", (req, res)=>{
+  let username = req.body.username;
+ 
+  User.find({username: username}).then(doc=>{
+      let user = doc[0];
+      res.json({
+          user: user
+      });
+  });
+    
 });
 
 app.get("/getAllUsers", (req, res)=>{
@@ -286,9 +300,98 @@ app.post("/getStorageArticles", (req, res)=>{
   let o = mongoose.Types.ObjectId(gardenId);
   ArticlInStorage.find({gardenId: o}).then(data=>{
     res.json({
-      articles: data
+      articls: data
     });
   })
-})
+});
+
+app.get("/getAllArticls", (req, res)=>{
+    Articl.find().then(data=>{
+        res.json({
+            articls: data
+        })
+    });
+});
+
+app.post("/createOrder", (req, res)=>{
+  let toPut = req.body.order;
+  console.log("CreateOrder -> ", toPut)
+  Order.create(toPut).then(doc=>{
+      res.json({
+          msg: "Ok"
+      });
+  })
+});
+
+app.post("/getOrdersFromGarden", (req, res)=>{
+  let garden = req.body.gardenId;
+
+  Order.find({gardenId: garden}).then(doc=>{
+    res.json({
+      orders: doc
+    })
+  })
+});
+
+app.post("/getArticlById", (req, res)=>{
+  let id = req.body.articlId;
+  // let o = mongoose.Types.ObjectId(id);
+  console.log(id);
+  Articl.findById(id).then(doc=>{
+    console.log(doc);
+    res.json({
+      articl: doc
+    })
+  })
+});
+
+app.post("/cancelOrder", (req, res)=>{
+  let id = req.body.orderId;
+  // let o = mongoose.Types.ObjectId(id);
+  console.log(id);
+  Order.findByIdAndDelete(id).then(doc=>{
+    console.log(doc);
+  })
+});
+
+app.post("/getEnterpriseById", (req, res)=>{
+  let id = req.body.id;
+  // let o = mongoose.Types.ObjectId(id);
+  console.log(id);
+  Enterprise.findById(id).then(doc=>{
+    res.json({
+      enterprise: doc
+    });
+  })
+});
+
+app.post("/getOrdersFromEnterprise", (req, res)=>{
+  let enterpriseId = req.body.enterpriseId;
+  // let o = mongoose.Types.ObjectId(id);
+  console.log(id);
+  let articlsRes = [];
+  let ordersRes = [];
+
+  Order.find().then(orders=>{
+    for(let i = 0; i < orders.length; i++){
+      let articlsId = orders['articlIds'];
+      for(let j = 0; j < articlsId.length; j++){
+        Articl.find({_id: articlsId[j], enterpriseId: id}).then(doc=>{
+          articlsRes.push(doc);
+          ordersRes.push(orders[i]);
+        })
+      }
+    }
+ 
+    console.log("Articls -> ", articlsRes);
+    console.log("Orders -> ", ordersRes);
+
+    res.json({
+      orders: ordersRes,
+      articls: articlsRes
+    })
+  })
+});
+
 
 app.listen(4000, () => console.log(`Express server running on port 4000`));

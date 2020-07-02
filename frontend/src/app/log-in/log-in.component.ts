@@ -3,6 +3,7 @@ import { LogInService } from 'src/services/LogIn/log-in.service';
 import { Router } from '@angular/router';
 import { User } from 'src/models/user';
 import { NgForm } from '@angular/forms';
+import { EnterpriseService } from 'src/services/Enterprise/enterprise.service';
 
 @Component({
   selector: 'app-log-in',
@@ -19,7 +20,7 @@ export class LogInComponent implements OnInit {
   ngOnInit(): void {
   }
 
-  constructor(public logInService: LogInService, private router: Router){}
+  constructor(public logInService: LogInService, private enterpriseService: EnterpriseService, public router: Router){}
 
   logInUser(form: NgForm){
     this.logInService.logIn(this.username, this.password).subscribe((data)=>{
@@ -46,13 +47,20 @@ export class LogInComponent implements OnInit {
   routeToPage(){
     this.logInService.getUser(this.user).subscribe(data=>{
       if(data['user'].type == 0){
+        localStorage.setItem('user', JSON.stringify(this.user));
         this.router.navigate(['/admin']);
       }
       if(data['user'].type == 1){
-        console.log("enterprise");
+        this.enterpriseService.getByUsername(data['user'].username).subscribe(data=>{
+          localStorage.setItem('user', JSON.stringify(data['user']));
+          this.router.navigate(['/ordersPreview']);
+        });
       }
       if(data['user'].type == 2){
-        console.log("farmer");
+        // .getByUsername(data['user'].username).subscribe(data=>{
+        //   localStorage.setItem('user', JSON.stringify(data['user']));
+        //   this.router.navigate(['/ordersOverview']);
+        // });
       }
     });
   }

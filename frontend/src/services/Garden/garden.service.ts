@@ -65,7 +65,7 @@ export class GardenService {
     return this.http.post(`${Constats.URI}/getAllGardensSeeds`, req);
   }
 
-  getMyStorage(gardenId: String){
+  getMyArticles(gardenId: String){
     let req = {
       gardenId: gardenId
     };

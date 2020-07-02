@@ -1,28 +1,57 @@
 <div id="title">Storage</div>
-<table class= "table">
-  <tr>
-    <th>Name</th>
-    <th>Producer</th>
-    <th>Quantity</th>
-  </tr>
+<table class="row-border hover"
+      id="storage"
+      datatable
+      [dtOptions]="dtOptions"
+      [dtTrigger]="dtTrigger">
+  <thead>
+    <tr>
+      <th>Name</th>
+      <th>Producer</th>
+      <th>Status</th>
+      <th>Quantity</th>
+      <th>Cancel order/Plant</th>
+    </tr>
+  </thead>
 
-  <tr *ngFor="let a of articles">
-    <!-- <td>{{a.articl.name}}</td>
-    <td>
-      {{a.articl.producer}}
-    </td> -->
-    <td>
-      {{a.qnt}}
-    </td>
-  </tr>
+<tbody>
+    <tr *ngFor="let a of articlesObj1" style="background-color:ivory;">
+      <td>{{a.articl.name}}</td>
+      <td>
+        {{a.articl.enterprise}}
+      </td>
+      <td>
+        Ordered {{a.orderId}}
+      </td>
+      <td>
+        {{a.qnt}}
+      </td>
+      <td>
+        <button class="btn btn-large btn-success"  (click)="cancelOrder(a.orderId)">&#10006;</button>
+      </td>
+    </tr>
 
-  <tr>
-    <!-- <td colspan="10" >
-      <button class="btn btn-large btn-primary" (click)="addNewEnterprise()">Add new enterprise</button>
-      <button class="btn btn-large btn-primary" (click)="addNewFarmer()">Add new farmer</button>
-    </td> -->
-  </tr>
+    <tr *ngFor="let a of articlesObj2">
+      <td>{{a.articl.name}}</td>
+      <td>
+        {{a.articl.enterprise}}
+      </td>
+      <td>
+        Available
+      </td>
+      <td >
+        {{a.qnt}}
+      </td>
+      <td>
+        <button class="btn btn-large btn-success" (click)="cancelOrder(a.orderId)">&#9825;</button>
+      </td>
+    </tr>
+
+  </tbody>
+
 </table>
+
+<button class="btn btn-large btn-warning" style="font-size: 20px; margin: 10px" (click)="shop()">Online store</button>
 
 
 

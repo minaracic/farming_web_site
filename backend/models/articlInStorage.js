@@ -5,9 +5,8 @@ const mongoose =  require('mongoose');
 const farmerSchema = mongoose.Schema({
     _id: mongoose.Types.ObjectId,
     gardenId: mongoose.Types.ObjectId, 
-    qnt: Number,
-    hasArrived: Boolean
-    //articlId
+    articlId: mongoose.Types.ObjectId, 
+    qnt: Number
 });
 
 module.exports = mongoose.model("ArticlInStorage", farmerSchema, "storages.articles");

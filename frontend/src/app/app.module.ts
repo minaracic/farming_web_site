@@ -18,6 +18,9 @@ import { GardensOverviewComponent } from './gardens-overview/gardens-overview.co
 import { GardenDetailsComponent } from './garden-details/garden-details.component';
 import { SeedProgressComponent } from './seed-progress/seed-progress.component';
 import { StorageComponent } from './storage/storage/storage.component';
+import { ShopComponent } from './shop/shop.component';
+import { DataTablesModule } from 'angular-datatables';
+import { OrdersPreviewComponent } from './orders-preview/orders-preview.component';
 
 
 @NgModule({
@@ -32,7 +35,9 @@ import { StorageComponent } from './storage/storage/storage.component';
     GardensOverviewComponent,
     GardenDetailsComponent,
     SeedProgressComponent,
-    StorageComponent
+    StorageComponent,
+    ShopComponent,
+    OrdersPreviewComponent
   ],
   imports: [
     BrowserModule,
@@ -40,7 +45,8 @@ import { StorageComponent } from './storage/storage/storage.component';
     FormsModule,
     HttpClientModule,
     BrowserAnimationsModule,
-    MatTableModule
+    MatTableModule,
+    DataTablesModule
   ],
   providers: [LogInService],
   bootstrap: [AppComponent]

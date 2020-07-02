@@ -16,7 +16,9 @@ export class EditEnterpriseComponent implements OnInit {
   password1:String;
   dateOfCreation:Date;
   address:String;
+  availablePostman: Number;
   email:String;
+  id: String;
 
   errorMsg:String;
 
@@ -26,23 +28,28 @@ export class EditEnterpriseComponent implements OnInit {
     this.username = this.router.parseUrl(this.router.url).queryParams['username'];
     this.enterpriseService.getByUsername(this.username).subscribe(data=>{
       let user: Enterprise = data['user'];
+      this.id = user._id;
       this.companyName = user.companyName;
       this.address = user.address;
       this.password1 = user.password;
       this.username = user.username;
       this.email = user.email;
+      this.availablePostman = user.availablePostman;
     });
 
   }
 
   saveChanges(editForm: NgForm){
     let toUpdate: Enterprise = {
+      _id: this.id,
       username: this.username,
       password: this.password1,
       companyName: this.companyName,
       dateOfCreation: this.dateOfCreation,
       address: this.address,
-      email: this.email
+      email: this.email,
+      availablePostman: this.availablePostman
+
     };
     console.log("saveChanges");
     this.enterpriseService.updateEnterprise(this.username, toUpdate).subscribe(data=>{
