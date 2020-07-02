@@ -5,9 +5,9 @@ const mongoose =  require('mongoose');
 const farmerSchema = mongoose.Schema({
     _id: mongoose.Types.ObjectId,
     name: String,
+    price: Number,
     type: Number,
-    enterpriseId: String,
-    producer: String,
+    enterpriseId: mongoose.Types.ObjectId,
     score: Number,
     qnt: Number
 });

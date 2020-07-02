@@ -10,6 +10,7 @@ const Seed = require("../models/seed");
 const ArticlInStorage = require("../models/articlInStorage");
 const Articl = require("../models/articl");
 const Order = require("../models/order");
+const { json } = require("express");
 
 const app = express();
 
@@ -180,7 +181,7 @@ app.post("/updateEnterprise", (req, res)=>{
     console.log("EditEnteprise");
     let username = req.body.username;
     let enterprise = req.body.enterprise;
-    console.log(enterprise);
+
     Enterprise.findOneAndUpdate({username: username}, {
         companyName: enterprise.companyName, 
         email: enterprise.email,  
@@ -315,7 +316,6 @@ app.get("/getAllArticls", (req, res)=>{
 
 app.post("/createOrder", (req, res)=>{
   let toPut = req.body.order;
-  console.log("CreateOrder -> ", toPut)
   Order.create(toPut).then(doc=>{
       res.json({
           msg: "Ok"
@@ -335,10 +335,7 @@ app.post("/getOrdersFromGarden", (req, res)=>{
 
 app.post("/getArticlById", (req, res)=>{
   let id = req.body.articlId;
-  // let o = mongoose.Types.ObjectId(id);
-  console.log(id);
   Articl.findById(id).then(doc=>{
-    console.log(doc);
     res.json({
       articl: doc
     })
@@ -347,17 +344,15 @@ app.post("/getArticlById", (req, res)=>{
 
 app.post("/cancelOrder", (req, res)=>{
   let id = req.body.orderId;
-  // let o = mongoose.Types.ObjectId(id);
-  console.log(id);
-  Order.findByIdAndDelete(id).then(doc=>{
-    console.log(doc);
-  })
+  let o = mongoose.Types.ObjectId(id);
+
+  Order.findByIdAndDelete(o,(err)=>{
+    console.log(err);
+  });
 });
 
 app.post("/getEnterpriseById", (req, res)=>{
   let id = req.body.id;
-  // let o = mongoose.Types.ObjectId(id);
-  console.log(id);
   Enterprise.findById(id).then(doc=>{
     res.json({
       enterprise: doc
@@ -365,33 +360,52 @@ app.post("/getEnterpriseById", (req, res)=>{
   })
 });
 
-app.post("/getOrdersFromEnterprise", (req, res)=>{
-  let enterpriseId = req.body.enterpriseId;
-  // let o = mongoose.Types.ObjectId(id);
-  console.log(id);
-  let articlsRes = [];
-  let ordersRes = [];
-
-  Order.find().then(orders=>{
-    for(let i = 0; i < orders.length; i++){
-      let articlsId = orders['articlIds'];
-      for(let j = 0; j < articlsId.length; j++){
-        Articl.find({_id: articlsId[j], enterpriseId: id}).then(doc=>{
-          articlsRes.push(doc);
-          ordersRes.push(orders[i]);
-        })
-      }
-    }
- 
-    console.log("Articls -> ", articlsRes);
-    console.log("Orders -> ", ordersRes);
-
+app.get("/allOrders", (req, res)=>{
+  Order.find().then(doc=>{
     res.json({
-      orders: ordersRes,
-      articls: articlsRes
-    })
-  })
+      orders: doc
+    });
+  });
 });
 
+app.post("/getOrdersFromEnterprise", (req, res)=>{
+  let enterpriseId = req.body.enterpriseId;
+  let e = mongoose.Types.ObjectId(enterpriseId);
+
+  Order.find({enterpriseId: enterpriseId}).then(orders=>{
+   res.json({
+       orders: orders
+   });
+  });
+});
+
+app.post("/getArticlsFromEnterprise", (req, res)=>{
+    let enterpriseId = req.body.enterpriseId;
+    let e = mongoose.Types.ObjectId(enterpriseId);
+    console.log(e);
+    Articl.find({enterpriseId: enterpriseId}).then(a=>{
+        console.log(a);
+        res.json({
+            articls: a
+        });
+    });
+});
+
+app.post("/addNewArticl", (req, res)=>{
+    let articl = req.body.articl;
+   
+    console.log(articl);
+    Articl.create(articl).then(a=>{
+        console.log(a);
+        if(a!=null)
+            res.json({
+                msg: 'Ok'
+            })
+        else
+            res.json({
+                msg: 'Not ok'
+            })
+    });
+});
 
 app.listen(4000, () => console.log(`Express server running on port 4000`));

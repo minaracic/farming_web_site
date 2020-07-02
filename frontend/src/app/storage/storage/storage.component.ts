@@ -99,7 +99,7 @@ export class StorageComponent implements OnInit, OnDestroy {
 
         this.enterpriseService.getById(articlIds[i].articl.enterpriseId.valueOf()).subscribe(data=>{
           let a = data['enterprise'].companyName;
-          articlIds[i].articl.enterprise = a;
+        //  articlIds[i].articl.enterprise = a;
 
           this.dtTrigger.next();
 

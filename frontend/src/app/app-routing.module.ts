@@ -13,6 +13,9 @@ import { StorageComponent } from './storage/storage/storage.component';
 import { ShopComponent } from './shop/shop.component';
 import { OrderService } from 'src/services/order/order.service';
 import { OrdersPreviewComponent } from './orders-preview/orders-preview.component';
+import { ArticlComponent } from './articl/articl.component';
+import { NewArticlComponent } from './new-articl/new-articl.component';
+import { HeaderComponent } from './header/header.component';
 
 
 const routes: Routes = [
@@ -28,7 +31,9 @@ const routes: Routes = [
   {path: 'storage', component: StorageComponent},
   {path: 'shop', component: ShopComponent},
   {path: 'ordersPreview', component: OrdersPreviewComponent},
-
+  {path: 'articls', component: ArticlComponent},
+  {path: 'newArticl', component: NewArticlComponent},
+  {path: 'header', component: HeaderComponent}
 ];
 
 @NgModule({

@@ -1,0 +1,17 @@
+#logOut{
+  float: right;
+  font-size: 20px;
+}
+
+#header{
+  height: 70px;
+  background-color: slateblue;
+  font-size: 60px;
+  text-align: center;
+  margin: 3.5px;
+}
+
+#title{
+  position: relative;
+  top:30px;
+}

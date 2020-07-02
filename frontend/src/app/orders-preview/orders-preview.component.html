@@ -1,5 +1,9 @@
 <div id="title">Online shop</div>
-<table class= "table">
+<table class="row-border hover"
+      datatable
+      [dtOptions]="dtOptions"
+      [dtTrigger]="dtTrigger">
+<thead>
   <tr>
     <th>OrderId</th>
     <th>Articl name</th>
@@ -7,37 +11,28 @@
     <th>Status</th>
     <th>Accept</th>
   </tr>
-  <!-- <tr *ngFor="let a of articls">
+</thead>
+<tbody>
+  <tr *ngFor="let order of orders; let i = index">
     <td>
-      <div class="form-check">
-        <input class="form-check-input" type="checkbox" value="{{a._id}}" id="checkBox">
-      </div>
+     {{order._id}}
     </td>
-    <td>{{a.name}}</td>
-    <td *ngIf="a.type.valueOf() == 1">
-      Seed
-    </td>
-    <td *ngIf="a.type.valueOf() == 2">
-      Elixir
-    </td>
+    <td>{{articls[i].name}}</td>
     <td>
-      {{a.qnt}}
+      {{order.dateOfOrder.valueOf()}}
+    </td>
+    <td *ngIf="order.status.valueOf() < 4">
+      Ordered
     </td>
     <td>
-      {{a.score}}
+      <button class="btn btn-large btn-success" style= "margin: 4px; font-size: 15px;" (click)="acceptOrder(order._id)">&#9825;</button>
+      <button class="btn btn-large btn-warning" style= "margin: 4px; font-size: 15px;" (click)="cancelOrder(order._id)">&#10006;</button>
     </td>
-    <td>
-      <button class="btn btn-large btn-success">Comment</button>
-      <button class="btn btn-large btn-warning">Score</button>
-    </td>
-  </tr> -->
-
-  <tr>
-    <!-- <td colspan="6" >
-     <button class="btn btn-large btn-warning" (click)="buy()">Buy</button>
-    </td> -->
   </tr>
+</tbody>
+
 </table>
 
+<button class="btn btn-large btn-warning" style= "margin: 4px; font-size: 15px;" (click)="myArticls()">Online store</button>
 
 

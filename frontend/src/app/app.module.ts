@@ -21,6 +21,10 @@ import { StorageComponent } from './storage/storage/storage.component';
 import { ShopComponent } from './shop/shop.component';
 import { DataTablesModule } from 'angular-datatables';
 import { OrdersPreviewComponent } from './orders-preview/orders-preview.component';
+import { ArticlComponent } from './articl/articl.component';
+import { NewArticlComponent } from './new-articl/new-articl.component';
+import { HeaderComponent } from './header/header.component';
+import { FooterComponent } from './footer/footer.component';
 
 
 @NgModule({
@@ -37,7 +41,11 @@ import { OrdersPreviewComponent } from './orders-preview/orders-preview.componen
     SeedProgressComponent,
     StorageComponent,
     ShopComponent,
-    OrdersPreviewComponent
+    OrdersPreviewComponent,
+    ArticlComponent,
+    NewArticlComponent,
+    HeaderComponent,
+    FooterComponent
   ],
   imports: [
     BrowserModule,

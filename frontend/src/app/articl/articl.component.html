@@ -1,0 +1,39 @@
+<div id="title">My articls</div>
+<table class= "table">
+  <tr>
+    <th>Articl name</th>
+    <th>Type</th>
+    <th>Quantity</th>
+    <th>Price</th>
+    <th>Web page</th>
+    <th>Delete</th>
+  </tr>
+  <tr *ngFor="let a of articls">
+    <td>{{a.name}}</td>
+    <td *ngIf="a.type.valueOf() == 1">
+      Seed
+    </td>
+    <td *ngIf="a.type.valueOf() == 2">
+      Elixir
+    </td>
+    <td>
+      {{a.qnt}}
+    </td>
+    <td>
+      {{a.price}}
+    </td>
+    <td>
+      <a href="">{{a.name}}</a>
+    </td>
+    <td>
+      <button class="btn btn-large btn-warning">&#10006;</button>
+    </td>
+  </tr>
+  <tr>
+    <td colspan="10">
+      <button class="btn btn-large btn-success" (click)="addNewArticl()">Add new articl</button>
+    </td>
+  </tr>
+</table>
+
+

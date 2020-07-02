@@ -10,7 +10,7 @@ export class OrderService {
 
   constructor(private http: HttpClient) { }
 
-  createOrder(order: Order){
+  createOrder(order){
     let req = {
       order: order
     }
@@ -30,6 +30,10 @@ export class OrderService {
       orderId: orderId
     };
     return this.http.post(`${Constats.URI}/cancelOrder`, req);
+  }
+
+  getAllOrders(){
+    return this.http.get(`${Constats.URI}/allOrders`);
   }
 
   getOrdersFromEnterprise(enterpriseId: string){

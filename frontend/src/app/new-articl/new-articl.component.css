@@ -1,0 +1,14 @@
+.form-group{
+  width: 20%;
+  font-size: 15px;
+  margin:20px
+}
+
+.form-control{
+  font-size: 15px;
+}
+
+.btn{
+  margin-left:20px;
+  font-size: 15px;
+}
