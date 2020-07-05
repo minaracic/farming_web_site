@@ -1,4 +1,4 @@
-import { Component, OnInit, OnDestroy } from '@angular/core';
+import { Component, OnInit, OnDestroy, AfterViewInit, ViewChild, Input } from '@angular/core';
 import { GardenService } from 'src/services/Garden/garden.service';
 import { Router } from '@angular/router';
 import { ArticlInStorage } from 'src/models/atriclInStorage';
@@ -7,37 +7,53 @@ import { Articl } from 'src/models/articl';
 import { Observable, observable, Subject } from 'rxjs';
 import { ArticlService } from 'src/services/articl/articl.service';
 import { EnterpriseService } from 'src/services/Enterprise/enterprise.service';
+import { StorageArticlsService } from 'src/services/StorageArticl/storage-articls.service';
+import { DataTableDirective } from 'angular-datatables';
+import { GardenDetailsComponent } from 'src/app/garden-details/garden-details.component';
+import { SeedService } from 'src/services/Seed/seed.service';
+import { EventEmitter } from 'events';
 
 @Component({
   selector: 'app-storage',
   templateUrl: './storage.component.html',
   styleUrls: ['./storage.component.css']
 })
-export class StorageComponent implements OnInit, OnDestroy {
+export class StorageComponent implements OnInit, OnDestroy{
 
   gardenId: string;
-  articlesObj1: ArticlInStorage[];
-  articlesObj2: ArticlInStorage[];
+  articlesObj1: ArticlInStorage[] = [];
+  articlesObj2: ArticlInStorage[] = [];
   orderes: Articl[];
 
-  dtOptions: DataTables.Settings = { retrieve: true};
+  dtOptions: DataTables.Settings = {
+    retrieve: true
+  };
+
   dtTrigger: Subject<any> = new Subject();
 
-  constructor(public router: Router, private enterpriseService: EnterpriseService, private gardenService: GardenService, private orderService: OrderService, private articleService: ArticlService) {
+  constructor(public router: Router,
+            protected enterpriseService: EnterpriseService,
+            protected gardenService: GardenService,
+            protected seedService: SeedService,
+            protected orderService: OrderService,
+            protected articleService: ArticlService,
+            protected storageArticlsService: StorageArticlsService) {
+              // this.gardenDetailsCmp = new GardenDetailsComponent(router, gardenService, seedService, orderService, articleService, enterpriseService);
 
-  }
+              // this.gardenDetailsCmp.eventEmitter.on("articlesObj2", (data)=>{
+              //   // this.articlesObj2 = data;
+              //   console.log("articlesObj2", data);
+              // })
+            }
 
   ngOnDestroy(): void {
     this.dtTrigger.unsubscribe();
   }
 
   ngOnInit(): void {
-    this.articlesObj1 = [];
-    this.articlesObj2 = [];
+
     this.gardenId = this.router.parseUrl(this.router.url).queryParams['gardenId'];
-
     this.getStorage();
-
   }
 
   getStorage(){
@@ -46,6 +62,7 @@ export class StorageComponent implements OnInit, OnDestroy {
       let ids: String[] = [];
       for(let i = 0; i < articls.length; i++){
         let a: ArticlInStorage = {
+          enterprise: "",
           gardenId: this.gardenId,
           articlId: articls[i].articlId,
           articl: null,
@@ -56,30 +73,11 @@ export class StorageComponent implements OnInit, OnDestroy {
         this.articlesObj2.push(a);
       }
       this.getAllArticles(this.articlesObj2);
+      // this.dtTrigger.next();
     });
-
-    this.orderService.getOrdersFromGarden(this.gardenId).subscribe(data=>{
-      let orderes = data['orders'];
-      let ids: String[] = [];
-      for(let i = 0; i < orderes.length; i++){
-        let order = orderes[i]['articlIds'];
-        for(let j = 0; j < order.length; j++){
-          let a: ArticlInStorage = {
-            gardenId: this.gardenId,
-            articlId: order[j],
-            orderId: orderes[i]._id,
-            articl: null,
-            qnt: 1,
-            status: orderes[i].status
-          }
-          this.articlesObj1.push(a);
-        }
-      }
-      this.getAllArticles(this.articlesObj1);
-    });
-
 
   }
+
 
   cancelOrder(orderId: String){
     this.orderService.cancelOrder(orderId.valueOf()).subscribe(data=>{
@@ -96,16 +94,21 @@ export class StorageComponent implements OnInit, OnDestroy {
     for(let i = 0; i < articlIds.length; i++){
       this.articleService.getById(articlIds[i].articlId).subscribe(data=>{
         articlIds[i].articl = data['articl'];
-
         this.enterpriseService.getById(articlIds[i].articl.enterpriseId.valueOf()).subscribe(data=>{
           let a = data['enterprise'].companyName;
-        //  articlIds[i].articl.enterprise = a;
-
+          console.log(a);
+          articlIds[i].enterprise = a;
           this.dtTrigger.next();
-
         })
       });
     }
   }
 
+  seed(id: string){
+    // this.storageArticlsService
+  }
+
+  myOrders(){
+    this.router.navigate(['/gardenOrder'], {queryParams: {gardenId: this.gardenId}});
+  }
 }

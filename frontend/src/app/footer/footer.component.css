@@ -4,7 +4,7 @@
   text-align: right;
   background-color: slateblue;
   position: fixed;
-  bottom: 0px;
-  right: 0px;
+  left: 0;
+  bottom: 0;
   width: 100%;
 }

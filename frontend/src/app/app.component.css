@@ -3,3 +3,9 @@
   margin: 0 5 5px ;
   width: 300px;
 }
+
+.btn{
+  font-size: 15px;
+  text-align: center;
+  width: 20%;
+}

@@ -27,4 +27,10 @@ export class ArticlComponent implements OnInit {
     this.router.navigate(['/newArticl']);
   }
 
+  removeArticlFromStore(id: string){
+    this.articlService.removeArticl(id).subscribe(data=>{
+
+    })
+  }
+
 }

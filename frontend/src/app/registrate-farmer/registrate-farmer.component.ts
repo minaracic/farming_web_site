@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, Renderer2 } from '@angular/core';
 import { NgForm } from '@angular/forms';
 import { UserService } from 'src/services/User/user.service';
 import { Router } from '@angular/router';
@@ -24,20 +24,39 @@ export class RegistrateFarmerComponent implements OnInit {
 
   errorMsg:String;
 
-  constructor(private router: Router, public userService: UserService, public farmerService: FarmerService) { }
+  constructor(private router: Router,
+              public userService: UserService,
+              private render2: Renderer2,
+              public farmerService: FarmerService) { }
 
   ngOnInit(): void {
     this.errorMsg = "";
+    const s = this.render2.createElement("script");
+    s.src = "https://www.google.com/recaptcha/api.js";
+    this.render2.appendChild(document.body, s);
   }
 
   addNewUser(){
-    let user = {
-      username: this.username,
-      password: this.password1,
-      type: 2,
-      approvedByAdmin: true
-    }
+    let user;
 
+    if(localStorage.getItem('user') != null){
+      user = {
+        _id: null,
+        username: this.username,
+        password: this.password1,
+        type: 2,
+        approvedByAdmin: true
+      }
+    }
+    else{
+      user = {
+        _id: null,
+        username: this.username,
+        password: this.password1,
+        type: 2,
+        approvedByAdmin: false
+      }
+    }
     return this.userService.addNewUser(user);
   }
 

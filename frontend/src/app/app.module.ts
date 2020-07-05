@@ -25,6 +25,10 @@ import { ArticlComponent } from './articl/articl.component';
 import { NewArticlComponent } from './new-articl/new-articl.component';
 import { HeaderComponent } from './header/header.component';
 import { FooterComponent } from './footer/footer.component';
+import { OrdersChartComponent } from './orders-chart/orders-chart.component';
+import { OrderStatisticComponent } from './order-statistic/order-statistic.component';
+import { ChangePasswordComponent } from './change-password/change-password.component';
+import { GardenOrdersComponent } from './garden-orders/garden-orders.component';
 
 
 @NgModule({
@@ -45,7 +49,11 @@ import { FooterComponent } from './footer/footer.component';
     ArticlComponent,
     NewArticlComponent,
     HeaderComponent,
-    FooterComponent
+    FooterComponent,
+    OrdersChartComponent,
+    OrderStatisticComponent,
+    ChangePasswordComponent,
+    GardenOrdersComponent
   ],
   imports: [
     BrowserModule,

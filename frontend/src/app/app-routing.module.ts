@@ -16,6 +16,9 @@ import { OrdersPreviewComponent } from './orders-preview/orders-preview.componen
 import { ArticlComponent } from './articl/articl.component';
 import { NewArticlComponent } from './new-articl/new-articl.component';
 import { HeaderComponent } from './header/header.component';
+import { OrderStatisticComponent } from './order-statistic/order-statistic.component';
+import { ChangePasswordComponent } from './change-password/change-password.component';
+import { GardenOrdersComponent } from './garden-orders/garden-orders.component';
 
 
 const routes: Routes = [
@@ -33,7 +36,10 @@ const routes: Routes = [
   {path: 'ordersPreview', component: OrdersPreviewComponent},
   {path: 'articls', component: ArticlComponent},
   {path: 'newArticl', component: NewArticlComponent},
-  {path: 'header', component: HeaderComponent}
+  {path: 'header', component: HeaderComponent},
+  {path: 'orderStatistic', component: OrderStatisticComponent},
+  {path: 'changePassword', component: ChangePasswordComponent},
+  {path: 'gardenOrder', component: GardenOrdersComponent}
 ];
 
 @NgModule({

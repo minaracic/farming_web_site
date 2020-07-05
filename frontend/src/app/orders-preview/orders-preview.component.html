@@ -21,8 +21,11 @@
     <td>
       {{order.dateOfOrder.valueOf()}}
     </td>
-    <td *ngIf="order.status.valueOf() < 4">
+    <td *ngIf="order.status.valueOf() == 1">
       Ordered
+    </td>
+    <td *ngIf="order.status.valueOf() == 2" style="background-color: indianred;">
+      On waiting
     </td>
     <td>
       <button class="btn btn-large btn-success" style= "margin: 4px; font-size: 15px;" (click)="acceptOrder(order._id)">&#9825;</button>
@@ -34,5 +37,6 @@
 </table>
 
 <button class="btn btn-large btn-warning" style= "margin: 4px; font-size: 15px;" (click)="myArticls()">Online store</button>
+<button class="btn btn-large btn-warning" style= "margin: 4px; font-size: 15px;" (click)="statistic()">Statistic</button>
 
 

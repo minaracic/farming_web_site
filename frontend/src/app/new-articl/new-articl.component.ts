@@ -15,6 +15,7 @@ export class NewArticlComponent implements OnInit {
   name: string;
   type: string;
   qnt: number;
+  available: Boolean;
   price: number;
   articl: Articl;
 
@@ -33,6 +34,7 @@ export class NewArticlComponent implements OnInit {
       qnt: this.qnt,
       price: this.price,
       enterpriseId: id,
+      available: this.available,
       score: 0
     }
 

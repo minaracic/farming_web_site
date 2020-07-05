@@ -1,4 +1,4 @@
-<div id="title">Storage</div>
+<div id="title" >Storage</div>
 <table class="row-border hover"
       id="storage"
       datatable
@@ -7,6 +7,7 @@
   <thead>
     <tr>
       <th>Name</th>
+      <th>Type</th>
       <th>Producer</th>
       <th>Status</th>
       <th>Quantity</th>
@@ -15,35 +16,25 @@
   </thead>
 
 <tbody>
-    <tr *ngFor="let a of articlesObj1" style="background-color:ivory;">
-      <td>{{a.articl.name}}</td>
-      <td>
-        {{a.articl.enterprise}}
-      </td>
-      <td>
-        Ordered {{a.orderId}}
-      </td>
-      <td>
-        {{a.qnt}}
-      </td>
-      <td>
-        <button class="btn btn-large btn-success"  (click)="cancelOrder(a.orderId)">&#10006;</button>
-      </td>
-    </tr>
-
     <tr *ngFor="let a of articlesObj2">
       <td>{{a.articl.name}}</td>
-      <td>
-        {{a.articl.enterprise}}
+      <td style="text-align: center;" *ngIf="a.articl.type == 1">
+        Seed
       </td>
-      <td>
+      <td style="text-align: center;" *ngIf="a.articl.type == 2">
+        Elixir
+      </td>
+      <td style="text-align: center;">
+        {{a.enterprise}}
+      </td>
+      <td style="text-align: center;">
         Available
       </td>
-      <td >
+      <td style="text-align: center;">
         {{a.qnt}}
       </td>
-      <td>
-        <button class="btn btn-large btn-success" (click)="cancelOrder(a.orderId)">&#9825;</button>
+      <td style="text-align: center;">
+        <button class="btn btn-large btn-success" style="text-align: center;" (click)="seed(a.articlId)">&#9825;</button>
       </td>
     </tr>
 
@@ -52,6 +43,7 @@
 </table>
 
 <button class="btn btn-large btn-warning" style="font-size: 20px; margin: 10px" (click)="shop()">Online store</button>
+<button class="btn btn-large btn-warning" style="font-size: 20px; margin: 10px" (click)="myOrders()">My orders</button>
 
 
 

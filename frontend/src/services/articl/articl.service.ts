@@ -2,6 +2,7 @@ import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { Constats } from 'src/constants';
 import { Articl } from 'src/models/articl';
+import { ArticlInStorage } from 'src/models/atriclInStorage';
 
 @Injectable({
   providedIn: 'root'
@@ -37,4 +38,21 @@ export class ArticlService {
 
     return this.http.post(`${Constats.URI}/addNewArticl`, req);
   }
+
+  removeArticl(id: string){
+    let req = {
+      id: id
+    };
+
+    return this.http.post(`${Constats.URI}/removeArticl`, req);
+  }
+
+   getAllArticles(articlIds: ArticlInStorage[]){
+    for(let i = 0; i < articlIds.length; i++){
+      this.getById(articlIds[i].articlId).subscribe(data=>{
+        articlIds[i].articl = data['articl'];
+      });
+    }
+  }
+
 }

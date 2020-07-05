@@ -11,6 +11,7 @@ import { FarmerService } from 'src/services/Farmer/farmer.service';
 })
 export class EditFarmerComponent implements OnInit {
 
+  id: String;
   name:String;
   surname:String;
   username:String;
@@ -30,6 +31,7 @@ export class EditFarmerComponent implements OnInit {
 
     this.farmerService.getByUsername(this.username).subscribe(data=>{
       let user: Farmer = data['user'];
+      this.id = user._id;
       this.name = user.name;
       this.username = user.username;
       this.surname = user.surname;
@@ -42,6 +44,7 @@ export class EditFarmerComponent implements OnInit {
 
   saveChanges(editForm: NgForm){
     let toUpdate: Farmer = {
+      _id:this.id,
       username: this.username,
       password: this.password1,
       name: this.name,

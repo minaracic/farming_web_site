@@ -37,4 +37,6 @@ export class FarmerService {
     return this.http.post(`${Constats.URI}/getUser`, req);
   }
 
+
+
 }

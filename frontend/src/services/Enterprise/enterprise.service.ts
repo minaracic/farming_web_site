@@ -44,4 +44,26 @@ export class EnterpriseService {
 
     return this.http.post(`${Constats.URI}/getEnterpriseById`, req);
   }
+
+  getAPostman(id: string){
+    let req = {
+      id: id
+    };
+
+    return this.http.post(`${Constats.URI}/getAPostman`, req);
+  }
+
+  returnAPostman(id: string){
+    let req = {
+      id: id
+    };
+
+    return this.http.post(`${Constats.URI}/returnAPostman`, req);
+  }
+
+  // this.enterpriseService.getById(articlIds[i].articl.enterpriseId.valueOf()).subscribe(data=>{
+  //   let a = data['enterprise'].companyName;
+  //   articlIds[i].enterprise = a;
+  // })
+
 }

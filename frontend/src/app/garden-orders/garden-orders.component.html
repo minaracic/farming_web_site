@@ -1,0 +1,48 @@
+<div id="title" >Storage</div>
+<table class="row-border hover"
+      id="storage"
+      datatable
+      [dtOptions]="dtOptions"
+      [dtTrigger]="dtTrigger">
+  <thead>
+    <tr>
+      <th>Name</th>
+      <th>Type</th>
+      <th>Producer</th>
+      <th>Status</th>
+      <th>Quantity</th>
+      <th>Cancel order/Plant</th>
+    </tr>
+  </thead>
+
+<tbody>
+  <tr *ngFor="let a of articlsObj" style="background-color:ivory;">
+    <td>{{a.articl.name}}</td>
+    <td style="text-align: center;" *ngIf="a.articl.type == 1">
+      Seed
+    </td>
+    <td style="text-align: center;" *ngIf="a.articl.type == 2">
+      Elixir
+    </td>
+    <td style="text-align: center;">
+      {{a.enterprise}}
+    </td>
+    <td style="text-align: center;">
+      Ordered {{a.orderId}}
+    </td>
+    <td style="text-align: center;">
+      {{a.qnt}}
+    </td>
+    <td style="text-align: center;">
+      <button class="btn btn-large btn-success" style="text-align: center;" (click)="cancelOrder(a.orderId)">&#10006;</button>
+    </td>
+  </tr>
+
+  </tbody>
+
+</table>
+
+<button class="btn btn-large btn-warning" style="font-size: 20px; margin: 10px" (click)="shop()">Online store</button>
+
+
+

@@ -5,5 +5,6 @@ export interface Articl{
   type:Number,
   name:String,
   score: Number,
-  qnt: Number
+  qnt: Number,
+  available: Boolean
 }

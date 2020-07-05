@@ -1,7 +1,9 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, Renderer2, Inject } from '@angular/core';
 import { Router } from '@angular/router';
 import { UserService } from 'src/services/User/user.service';
 import { EnterpriseService } from 'src/services/Enterprise/enterprise.service';
+import { DOCUMENT } from '@angular/common';
+import { NgForm } from '@angular/forms';
 
 @Component({
   selector: 'app-registrate-enterprise',
@@ -20,24 +22,45 @@ export class RegistrateEnterpriseComponent implements OnInit {
 
   errorMsg:String;
 
-  constructor(private router: Router, public userService: UserService, public enterpriseService: EnterpriseService) { }
+  constructor(private router: Router,
+              public userService: UserService,
+              private render2: Renderer2,
+              public enterpriseService: EnterpriseService) { }
 
   ngOnInit(): void {
     this.errorMsg = "";
+    const s = this.render2.createElement("script");
+    s.src = "https://www.google.com/recaptcha/api.js";
+    this.render2.appendChild(document.body, s);
   }
 
-  registrate(form){
+  registrate(form: NgForm){
+
     if(this.password1 != this.password2){
       this.errorMsg += "Passwords don't match \n";
     }
 
     if(this.errorMsg == ""){
 
-      let user = {
-        username: this.username,
-        password: this.password1,
-        type: 1,
-        approvedByAdmin: true
+      let user;
+
+      if(localStorage.getItem('user') != null){
+        user = {
+          _id: null,
+          username: this.username,
+          password: this.password1,
+          type: 1,
+          approvedByAdmin: true
+        }
+      }
+      else{
+        user = {
+          _id: null,
+          username: this.username,
+          password: this.password1,
+          type: 1,
+          approvedByAdmin: false
+        }
       }
 
       this.userService.addNewUser(user).subscribe(data=>{
@@ -45,6 +68,7 @@ export class RegistrateEnterpriseComponent implements OnInit {
         let res = data['message'];
         if(res == "Ok"){
           let enterprise = {
+            _id: null,
             companyName: this.companyName,
             username: this.username,
             password: this.password1,

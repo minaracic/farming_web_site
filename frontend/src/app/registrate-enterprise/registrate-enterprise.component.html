@@ -1,3 +1,4 @@
+
 <form (ngSubmit) = "registrate(registrationFrom)" #registrationFrom = "ngForm">
   <div class="form-group">
     <label>Company name</label>
@@ -67,10 +68,18 @@
           name="email"
           required>
   </div>
-  <button type="submit" class="btn btn-primary" [disabled]="!registrationFrom.form.valid">Submit</button>
+  <div class="form-group">
+      <div id="recaptcha"
+          class="g-recaptcha"
+          data-sitekey="6LeQZq0ZAAAAACkrc9IQSnLemuu7DsiU0I6CVcTo"></div>
+      <br/>
+    </div>
+
+  <button type="submit"
+          class="btn btn-primary"
+          [disabled]="!registrationFrom.form.valid">Submit</button>
 </form>
 
 <p id="errorMessage">
   {{errorMsg}}
 </p>
-

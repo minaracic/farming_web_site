@@ -6,6 +6,8 @@ import { Articl } from 'src/models/articl';
 import { Enterprise } from 'src/models/enterprise';
 import { ArticlService } from 'src/services/articl/articl.service';
 import { Subject } from 'rxjs';
+import { EnterpriseService } from 'src/services/Enterprise/enterprise.service';
+import { GoogleMapsService } from 'src/services/Google-maps/google-maps.service';
 
 @Component({
   selector: 'app-orders-preview',
@@ -21,7 +23,11 @@ export class OrdersPreviewComponent implements OnInit {
   dtOptions: DataTables.Settings = {searching:false, retrieve:true};
   dtTrigger: Subject<any> = new Subject();
 
-  constructor(public router: Router, public orderService: OrderService, public articlService: ArticlService) { }
+  constructor(public router: Router,
+              public orderService: OrderService,
+              public articlService: ArticlService,
+              public enterpriseService: EnterpriseService,
+              public mapsService: GoogleMapsService) { }
 
   ngOnDestroy(): void {
     this.dtTrigger.unsubscribe();
@@ -51,7 +57,22 @@ export class OrdersPreviewComponent implements OnInit {
   }
 
   acceptOrder(id: string){
+    this.enterpriseService.getById(this.enterprise._id.valueOf()).subscribe(data=>{
+      let availablePostman = data['enterprise'].availablePostman;
+      if(availablePostman > 0){
+        this.enterpriseService.getAPostman(this.enterprise._id.valueOf()).subscribe((data)=>{});
+        this.calcTimeForOrder();
+      }
+      else{
+        this.orderService.updateStatus(id).subscribe((data)=>{})
+      }
+    })
+  }
 
+  calcTimeForOrder(){
+    this.mapsService.getDistance('Majora Zorana Radosavljevica 365', 'Dalmatinske Zagore 103').subscribe(data=>{
+      console.log(data);
+    });
   }
 
   cancelOrder(id: string){
@@ -62,5 +83,9 @@ export class OrdersPreviewComponent implements OnInit {
 
   myArticls(){
     this.router.navigate(['/articls']);
+  }
+
+  statistic(){
+    this.router.navigate(['/orderStatistic']);
   }
 }

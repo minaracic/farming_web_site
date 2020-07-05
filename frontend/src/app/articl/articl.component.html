@@ -4,6 +4,7 @@
     <th>Articl name</th>
     <th>Type</th>
     <th>Quantity</th>
+    <th>Available in store</th>
     <th>Price</th>
     <th>Web page</th>
     <th>Delete</th>
@@ -20,13 +21,16 @@
       {{a.qnt}}
     </td>
     <td>
+      {{a.available}}
+    </td>
+    <td>
       {{a.price}}
     </td>
     <td>
       <a href="">{{a.name}}</a>
     </td>
     <td>
-      <button class="btn btn-large btn-warning">&#10006;</button>
+      <button class="btn btn-large btn-warning" (click)="removeArticlFromStore(a._id)">&#10006;</button>
     </td>
   </tr>
   <tr>

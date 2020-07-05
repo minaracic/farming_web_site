@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { Garden } from 'src/models/garden';
 import { GardenService } from 'src/services/Garden/garden.service';
 import { Router } from '@angular/router';
+import { Constats } from 'src/constants';
 
 @Component({
   selector: 'app-gardens-overview',
@@ -15,31 +16,36 @@ export class GardensOverviewComponent implements OnInit {
   constructor(public router: Router, private gardenService: GardenService) { }
 
   ngOnInit(): void {
+    this.owner = JSON.parse(localStorage.getItem('user'))['username'];
+    console.log(this.owner);
+
     this.gardenService.getGardensByOwner(this.owner).subscribe(data=>{
       this.gardens = data['gardens'];
-    })
+    });
+
+
   }
 
   incWaterInGarden(gardenName: string){
-    this.gardenService.incWaterInGarden(gardenName).subscribe(data=>{
+    this.gardenService.incWaterInGarden(this.owner, gardenName).subscribe(data=>{
 
     })
   }
 
   decWaterInGarden(gardenName: string){
-    this.gardenService.decWaterInGarden(gardenName).subscribe(data=>{
+    this.gardenService.decWaterInGarden(this.owner, gardenName).subscribe(data=>{
 
     })
   }
 
   incTmpInGarden(gardenName: string){
-    this.gardenService.incTmpInGarden(gardenName).subscribe(data=>{
+    this.gardenService.incTmpInGarden(this.owner, gardenName).subscribe(data=>{
 
     })
   }
 
   decTmpInGarden(gardenName: string){
-    this.gardenService.decTmpInGarden(gardenName).subscribe(data=>{
+    this.gardenService.decTmpInGarden(this.owner, gardenName).subscribe(data=>{
 
     })
   }

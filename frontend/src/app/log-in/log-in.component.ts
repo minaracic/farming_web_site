@@ -4,6 +4,7 @@ import { Router } from '@angular/router';
 import { User } from 'src/models/user';
 import { NgForm } from '@angular/forms';
 import { EnterpriseService } from 'src/services/Enterprise/enterprise.service';
+import { FarmerService } from 'src/services/Farmer/farmer.service';
 
 @Component({
   selector: 'app-log-in',
@@ -20,7 +21,10 @@ export class LogInComponent implements OnInit {
   ngOnInit(): void {
   }
 
-  constructor(public logInService: LogInService, private enterpriseService: EnterpriseService, public router: Router){}
+  constructor(public logInService: LogInService,
+              private enterpriseService: EnterpriseService,
+              public router: Router,
+              private farmerService: FarmerService){}
 
   logInUser(form: NgForm){
     this.logInService.logIn(this.username, this.password).subscribe((data)=>{
@@ -57,7 +61,10 @@ export class LogInComponent implements OnInit {
         });
       }
       if(data['user'].type == 2){
-        // .getByUsername(data['user'].username).subscribe(data=>{
+        this.farmerService.getByUsername(data['user'].username).subscribe(data=>{
+          localStorage.setItem('user', JSON.stringify(data['user']));
+          this.router.navigate(['/gardensOverview']);
+        })        // .getByUsername(data['user'].username).subscribe(data=>{
         //   localStorage.setItem('user', JSON.stringify(data['user']));
         //   this.router.navigate(['/ordersOverview']);
         // });
@@ -65,4 +72,11 @@ export class LogInComponent implements OnInit {
     });
   }
 
+  registerAsFarmer(){
+    this.router.navigate(['/registrateFarmer']);
+  }
+
+  registerAsEnterprise(){
+    this.router.navigate(['/registrateEnterprise']);
+  }
 }

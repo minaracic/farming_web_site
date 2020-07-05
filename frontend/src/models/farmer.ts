@@ -1,4 +1,5 @@
 export interface Farmer {
+  _id: String,
   username:String,
   password:String,
   name: String,

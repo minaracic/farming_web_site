@@ -1,9 +1,18 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, Output } from '@angular/core';
 import { Router } from '@angular/router';
 import { Garden } from 'src/models/garden';
 import { Seed } from 'src/models/seed';
 import { GardenService } from 'src/services/Garden/garden.service';
 import { SeedService } from 'src/services/Seed/seed.service';
+import { Constats } from 'src/constants';
+import { ArticlInStorage } from 'src/models/atriclInStorage';
+import { OrderService } from 'src/services/order/order.service';
+import { Articl } from 'src/models/articl';
+import { ArticlService } from 'src/services/articl/articl.service';
+import { EnterpriseService } from 'src/services/Enterprise/enterprise.service';
+import { StorageComponent } from '../storage/storage/storage.component';
+import { emit } from 'process';
+import {EventEmitter} from 'events';
 
 @Component({
   selector: 'app-garden-details',
@@ -24,11 +33,24 @@ export class GardenDetailsComponent implements OnInit {
   numOfRows:number;
   garden: Garden;
 
+  public eventEmitter = new EventEmitter();
+  articlesObj1: ArticlInStorage[];
+  articlesObj2: ArticlInStorage[];
+  orderes: Articl[];
+
   seedDetailsNode: Node;
 
-  constructor(public router: Router, private gardenService: GardenService, private seedService: SeedService) { }
+  constructor(public router: Router,
+    protected gardenService: GardenService,
+    protected seedService: SeedService,
+    protected orderService: OrderService,
+    protected articlService: ArticlService,
+    protected enterpriseService: EnterpriseService) { }
 
   ngOnInit(): void {
+    this.articlesObj1 = [];
+    this.articlesObj2 = [];
+
     this.owner = this.router.parseUrl(this.router.url).queryParams['owner'];
     this.gardenName = this.router.parseUrl(this.router.url).queryParams['gardenName'];
 
@@ -79,54 +101,6 @@ export class GardenDetailsComponent implements OnInit {
     }
   }
 
-  createSeedDetailsPopUp(w, seed: Seed, event: MouseEvent){
-    let div = document.createElement("div");
-    div.id = "seedDetails";
-    div.style.fontSize = "15px";
-    div.style.border = ".5px solid black";
-    div.style.width = "350px";
-    div.style.height = "100px"
-    div.style.backgroundColor = "white";
-    div.setAttribute("z-index", 100 + "");
-
-    let name = document.createElement("div");
-    name.style.margin = "5px";
-    name.innerHTML = "Name: " + seed.name;
-    name.setAttribute("z-index", 100 + "");
-    div.append(name);
-
-    let producer = document.createElement("div");
-    producer.innerHTML = "Producer: " + seed.producer;
-    producer.style.margin = "5px";
-    div.append(producer);
-
-    let valueNow = Number((seed.progress.valueOf() / seed.totalGrowDays.valueOf() * 100).toFixed(2));
-    let progress = document.createElement("div");
-    progress.className = "progress";
-    progress.style.margin = "5px";
-    let progressBar = document.createElement("div");
-    progressBar.className = "progress-bar";
-    progressBar.setAttribute("role", "progressbar");
-    progressBar.setAttribute("aria-valuenow", valueNow + "");
-    progressBar.setAttribute("aria-valuemin", "0");
-    progressBar.setAttribute("aria-valuemax", "100");
-    progressBar.style.width = valueNow + "%";
-    progressBar.innerHTML = valueNow + "%";
-    progress.append(progressBar);
-    div.append(progress);
-
-    let btn = document.createElement("button");
-    btn.style.margin = "5px";
-    btn.className = "btn btn-large btn-warning";
-    btn.innerHTML = "Add elixir";
-    // btn.onclick = this.addElixir(seed, event);
-    div.append(btn);
-    w.document.documentElement.append(div);
-
-    this.seedDetailsNode = div;
-  }
-
-
   addElixir(seed: Seed){
 
   }
@@ -140,7 +114,7 @@ export class GardenDetailsComponent implements OnInit {
       seed.harvested = true;
       setTimeout(()=>{
         this.harvestSeed(seed);
-      }, 3000);
+      }, Constats.harvestTime);
     }
   }
 
@@ -154,7 +128,9 @@ export class GardenDetailsComponent implements OnInit {
     });
   }
 
-  getMyStorage(){
+  public getMyStorage(){
     this.router.navigate(['/storage'], {queryParams: {gardenId: this.gardenId}});
+
   }
+
 }

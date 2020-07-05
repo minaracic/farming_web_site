@@ -6,6 +6,7 @@ const enterpriseSchema = mongoose.Schema({
     username: String,
     password: String,
     dateOfCreation: Date,
+    availablePostman: Number,
     address: String,
     email: String
 });

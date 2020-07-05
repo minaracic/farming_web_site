@@ -28,7 +28,7 @@ export class SeedProgressComponent implements OnInit {
     let div = document.createElement("div");
     div.id = "details";
     div.style.left = "0px";
-    div.style.top = "0px";
+    div.style.top = "150px";
     div.style.position = "fixed";
     div.style.fontSize = "15px";
     div.style.border = ".5px solid black";

@@ -9,7 +9,8 @@ const farmerSchema = mongoose.Schema({
     type: Number,
     enterpriseId: mongoose.Types.ObjectId,
     score: Number,
-    qnt: Number
+    qnt: Number,
+    available: Boolean
 });
 
 module.exports = mongoose.model("Articl", farmerSchema);

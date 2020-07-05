@@ -42,4 +42,19 @@ export class OrderService {
     };
     return this.http.post(`${Constats.URI}/getOrdersFromEnterprise`, req);
   }
+
+  updateStatus(orderId: string){
+    let req = {
+      orderId: orderId
+    };
+    return this.http.post(`${Constats.URI}/updateOrderStatusToWaiting`, req);
+  }
+
+  getOrdersFrom(fromToday: number){
+    let req = {
+      fromToday: fromToday
+    };
+
+    return this.http.post(`${Constats.URI}/orderFromDay`, req);
+  }
 }
