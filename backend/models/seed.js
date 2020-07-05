@@ -4,12 +4,12 @@ const mongoose =  require('mongoose');
 //blueprint 
 const farmerSchema = mongoose.Schema({
     _id: mongoose.Types.ObjectId,
-    owner:String,
-    garden:String,
+    gardenId: mongoose.Types.ObjectId,
+    producerId: mongoose.Types.ObjectId,
     name: String,
     progress:Number,
-    producer: String,
-    totalGrowDays: Number
+    totalGrowDays: Number,
+    harvested: Boolean
 });
 
 module.exports = mongoose.model("Seed", farmerSchema);

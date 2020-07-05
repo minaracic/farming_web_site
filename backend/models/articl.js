@@ -10,7 +10,8 @@ const farmerSchema = mongoose.Schema({
     enterpriseId: mongoose.Types.ObjectId,
     score: Number,
     qnt: Number,
-    available: Boolean
+    available: Boolean,
+    totalGrowDays: Number
 });
 
 module.exports = mongoose.model("Articl", farmerSchema);

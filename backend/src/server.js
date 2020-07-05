@@ -2,6 +2,8 @@ const express = require("express");
 const bodyParser = require("body-parser");
 const mongoose = require("mongoose");
 
+const {Client, Status} = require("@googlemaps/google-maps-services-js");
+
 const User = require("../models/user");
 const Farmer = require("../models/farmer");
 const Enterprise = require("../models/enterprise");
@@ -11,6 +13,7 @@ const ArticlInStorage = require("../models/articlInStorage");
 const Articl = require("../models/articl");
 const Order = require("../models/order");
 const { json } = require("express");
+const seed = require("../models/seed");
 
 const app = express();
 
@@ -236,43 +239,39 @@ app.post("/updateFarmer", (req, res)=>{
 });
 
 app.post("/incWaterInGarden", (req, res)=>{
-    let owner = req.body.owner;
     let gardenName = req.body.garden;
-    Garden.findOneAndUpdate({owner: owner, name: gardenName},{$inc:{water: 1}}).then(data=>{
+    console.log(gardenName);
+    Garden.findOneAndUpdate({ _id: gardenName},{$inc:{water: 1}}).then(data=>{
 
     });
 });
 
 app.post("/decWaterInGarden", (req, res)=>{
-    let owner = req.body.owner;
     let gardenName = req.body.garden;
-    Garden.findOneAndUpdate({owner: owner, name: gardenName},{$inc:{water: -1}}).then(data=>{
+    console.log(gardenName);
+    Garden.findOneAndUpdate({ _id: gardenName},{$inc:{water: -1}}).then(data=>{
 
   });
 });
 
 app.post("/incTmpInGarden", (req, res)=>{
-    let owner = req.body.owner;
     let gardenName = req.body.garden;
-    Garden.findOneAndUpdate({owner: owner, name: gardenName},{$inc:{temperature: 1}}).then(data=>{
+    Garden.findOneAndUpdate({ _id: gardenName},{$inc:{temperature: 1}}).then(data=>{
 
     });
 });
 
 app.post("/decTmpInGarden", (req, res)=>{
-    let owner = req.body.owner;
     let gardenName = req.body.garden;
-    console.log(owner);
     console.log(gardenName);
-    Garden.findOneAndUpdate({owner: owner, name: gardenName},{$inc:{temperature: -1}}).then(data=>{
+    Garden.findOneAndUpdate({ _id: gardenName},{$inc:{temperature: -1}}).then(data=>{
 
     });
 });
 
 app.post("/getAllSeeds", (req, res)=>{
-    let owner = req.body.owner;
     let gardenName = req.body.garden;
-    Seed.find({owner: owner, name: gardenName}).then(doc=>{
+    Seed.find({gardenId: gardenName}).then(doc=>{
         res.json({
             seeds: doc
         });
@@ -280,10 +279,9 @@ app.post("/getAllSeeds", (req, res)=>{
 });
 
 app.post("/getGarden", (req, res)=>{
-    let owner = req.body.owner;
     let gardenName = req.body.garden;
     
-    Garden.find({owner: owner, name: gardenName}).then(doc=>{
+    Garden.find({_id: gardenName}).then(doc=>{
         res.json({
             garden: doc[0]
         })
@@ -291,10 +289,9 @@ app.post("/getGarden", (req, res)=>{
 });
 
 app.post("/getAllGardensSeeds", (req, res)=>{
-    let owner = req.body.owner;
     let gardenName = req.body.garden;
     
-    Seed.find({owner: owner, garden: gardenName}).then(doc=>{
+    Seed.find({gardenId: gardenName}).then(doc=>{
         res.json({
             seeds: doc
         })
@@ -338,7 +335,7 @@ app.post("/createOrder", (req, res)=>{
 app.post("/getOrdersFromGarden", (req, res)=>{
   let garden = req.body.gardenId;
 
-  Order.find({gardenId: garden}).then(doc=>{
+  Order.find({gardenId: garden, status: 1}).then(doc=>{
     res.json({
       orders: doc
     })
@@ -438,12 +435,26 @@ app.post("/returnAPostman", (req, res)=>{
     })
 });
 
-app.post("/updateOrderStatusToWaiting", (req, res)=>{
+app.post("/updateOrderStatus", (req, res)=>{
     let id = req.body.orderId;
+    let status = req.body.status;
     let e = mongoose.Types.ObjectId(id);
 
-    Order.findOneAndUpdate({_id: e} ,{ status: 2}).then(data=>{
-
+    Order.findOneAndUpdate({_id: e} ,{ status: status}).then(data=>{
+      console.log(data);
+      if(status == 4){
+        for(let i = 0; i < data.articlIds.length; i++){
+            let a = {
+              _id: null,
+              gardenId: data.gardenId,
+              qnt: 1,
+              articlId: data.articlIds[i] 
+            }
+            console.log(a);
+            const aa = ArticlInStorage.create(a);
+            console.log(aa);
+        }
+      }
     })
 });
 
@@ -470,10 +481,6 @@ app.post("/orderFromDay", (req, res)=>{
         from = new Date(today -24*60*60*1000*fromToday);
         from.setUTCHours(0 , 0, 0, 0);
     }
-
-    console.log(from);
-    console.log(to);
-
     Order.find({$and: [ {dateOfOrder: {$gte: from}},{dateOfOrder: {$lte: to}}] }).then(doc=>{
         res.json({
           orders: doc,
@@ -515,7 +522,6 @@ app.post("/checkPassword", (req, res)=>{
     
 });
 
-
 app.get("/updateGardens", (req, res)=>{
   console.log("updateGardens")
   Garden.updateMany({$inc:{water: -1}, $inc: {temperature: -0.5}}).then(data=>{
@@ -523,4 +529,94 @@ app.get("/updateGardens", (req, res)=>{
   });
 });
 
+app.post("/getSeedFromStorage", (req, res)=>{
+  console.log("getSeedFromStorage");
+  let id = req.body.articlId;
+  let e = mongoose.Types.ObjectId(id);
+  console.log(id);
+  ArticlInStorage.findOneAndUpdate({_id: e }, {$inc:{qnt: -1}}).then(data=>{
+    console.log(data.qnt);
+    if(data.qnt <= 0){
+      ArticlInStorage.deleteOne({_id: e }).then(()=>{});
+    }
+    res.json({
+      msg: 'Ok'
+    })
+  });
+});
+
+app.post("/plantASeed", (req, res)=>{
+    let id = req.body.gardenId;
+    let e = mongoose.Types.ObjectId(id);
+
+    Garden.findOneAndUpdate({ _id: req.body.s.gardenId, numOfUsedSeeds: {$gte: 1}}, {$inc: {numOfUsedSeeds: 1}}).then(data=>{
+      Seed.create(req.body.s).then(data=>{
+        res.json({
+          msg: 'Ok'
+        })
+      });
+    });
+});
+
+app.get("/updateProgress", (req, res)=>{
+  console.log("updateProgress");
+  
+  Seed.find().stream().on('data', (d)=>{
+    let total = d.totalGrowDays;
+    Seed.findOneAndUpdate({_id: d._id, progress:{$lt: total}},{$inc: {progress: 1}}).then(data=>{
+      console.log(data);
+    })
+  }).on('error', function(err){
+    console.log(err);
+  })
+  .on('end', function(){
+    // final callback
+  });
+
+});
+
+app.post("/getSeedById", (req, res)=>{
+  let id = req.body.seedId;
+  let e = mongoose.Types.ObjectId(id);
+  Seed.findById(e).then(data=>{
+    res.json({
+      seed: data[0]
+    })
+  });
+});
+
+app.post("/setHarvested", (req, res)=>{
+  let id = req.body.seed;
+  let e = mongoose.Types.ObjectId(id);
+  Seed.findOneAndUpdate({_id: e}, {harvested: true}).then(data=>{
+    console.log(data);
+    res.json({
+      msg: 'ok'
+    })
+  });
+});
+
+app.post("/getDistance",(req, res)=>{
+  console.log("getD");
+  const client = new Client({});
+  let a = req.body.a;
+  let b  =req.body.b;
+  client
+    .distancematrix({
+      params: {
+        origins: [a],
+        destinations: [b],
+        key: "AIzaSyDq1SIDuN-JWV0N_uIVv1gF_65oLMrpOXU",
+      },
+      timeout: 1000, // milliseconds
+    })
+    .then((r) => {
+      console.log(r.data.rows[0].elements[0].duration);
+      // console.log(r.data.results[0]);
+    })
+    .catch((e) => {
+      console.log(e.response.data.error_message);
+    });
+
+})
 app.listen(4000, () => console.log(`Express server running on port 4000`));
