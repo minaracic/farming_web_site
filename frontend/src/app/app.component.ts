@@ -5,6 +5,7 @@ import { User } from 'src/models/user';
 import { LogInRes, Constats } from 'src/constants';
 import { Router } from '@angular/router';
 import { GardenService } from 'src/services/Garden/garden.service';
+import { SeedService } from 'src/services/Seed/seed.service';
 
 @Component({
   selector: 'app-root',
@@ -14,7 +15,8 @@ import { GardenService } from 'src/services/Garden/garden.service';
 export class AppComponent implements OnInit{
   title="Farming"
   constructor(public router: Router,
-              public gardenService: GardenService){
+              public gardenService: GardenService,
+              public seedService: SeedService){
 
   }
 
@@ -23,8 +25,14 @@ export class AppComponent implements OnInit{
     this.gardenService.updateGardens().subscribe(data=>{})
   }
 
+  updateSeedsProgress(){
+    console.log("updateSeedsProgress");
+    this.seedService.updateProgress().subscribe(data=>{})
+  }
+
   ngOnInit(){
     setInterval(()=>{this.updateGardens()}, Constats.gardenUpdateTime);
+    setInterval(()=>{this.updateSeedsProgress()}, Constats.seedGrowTime);
   }
 
 }

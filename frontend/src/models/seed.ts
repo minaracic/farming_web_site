@@ -1,6 +1,7 @@
 export interface Seed{
   _id: String,
-  owner: String,
+  gardenId:String,
+  producerId: String,
   garden:String,
   name: String,
   producer: String,

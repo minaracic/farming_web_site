@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { Seed } from 'src/models/seed';
 import { Router } from '@angular/router';
+import { SeedService } from 'src/services/Seed/seed.service';
 
 @Component({
   selector: 'app-seed-progress',
@@ -10,18 +11,22 @@ import { Router } from '@angular/router';
 export class SeedProgressComponent implements OnInit {
 
   seed: Seed;
+  seedId: string;
   name: string;
   producer: string;
   progress: number;
   valueNow: number;
 
-  constructor(public router: Router) { }
+  constructor(public router: Router,
+              public seedService: SeedService) { }
 
   ngOnInit(): void {
-    this.seed  = JSON.parse(this.router.parseUrl(this.router.url).queryParams['user']);
-    this.valueNow = Number((this.seed.progress.valueOf() / this.seed.totalGrowDays.valueOf() * 100).toFixed(2));
-    console.log(this.valueNow);
-    this.addDetails();
+    this.seedId  = JSON.parse(this.router.parseUrl(this.router.url).queryParams['seedId']);
+    this.seedService.getById(this.seedId).subscribe(data=>{
+      this.seed = data['seed'];
+      this.valueNow = Number((this.seed.progress.valueOf() / this.seed.totalGrowDays.valueOf() * 100).toFixed(2));
+      this.addDetails();
+    })
   }
 
   addDetails(){

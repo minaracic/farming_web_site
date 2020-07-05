@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, Renderer2 } from '@angular/core';
 import { Order } from 'src/models/order';
 import { OrderService } from 'src/services/order/order.service';
 import { Router } from '@angular/router';
@@ -26,6 +26,7 @@ export class OrdersPreviewComponent implements OnInit {
   constructor(public router: Router,
               public orderService: OrderService,
               public articlService: ArticlService,
+              private render2: Renderer2,
               public enterpriseService: EnterpriseService,
               public mapsService: GoogleMapsService) { }
 
@@ -54,6 +55,12 @@ export class OrdersPreviewComponent implements OnInit {
       }
     });
 
+    this.mapsService.getDistance('Dalmatinske Zagore 12, Beograd', 'Takovksa 12').subscribe((data)=>{});
+
+    // const s = this.render2.createElement("script");
+    // s.src = "https://maps.googleapis.com/maps/api/js?key=AIzaSyDq1SIDuN-JWV0N_uIVv1gF_65oLMrpOXU&libraries=geometry";
+    // this.render2.appendChild(document.body, s);
+
   }
 
   acceptOrder(id: string){
@@ -61,18 +68,29 @@ export class OrdersPreviewComponent implements OnInit {
       let availablePostman = data['enterprise'].availablePostman;
       if(availablePostman > 0){
         this.enterpriseService.getAPostman(this.enterprise._id.valueOf()).subscribe((data)=>{});
+        this.orderService.updateStatus(id, 3).subscribe((data)=>{})
         this.calcTimeForOrder();
       }
       else{
-        this.orderService.updateStatus(id).subscribe((data)=>{})
+        this.orderService.updateStatus(id, 2).subscribe((data)=>{})
       }
     })
   }
 
   calcTimeForOrder(){
-    this.mapsService.getDistance('Majora Zorana Radosavljevica 365', 'Dalmatinske Zagore 103').subscribe(data=>{
-      console.log(data);
-    });
+    // this.mapsService.getDistance('Majora Zorana Radosavljevica 365', 'Dalmatinske Zagore 103').subscribe(data=>{
+    //   console.log(data);
+    // });
+
+  }
+
+  changeOrderStatus(orderId: string){
+    let newStatus = confirm("Are you sure you want to deliver product now?");
+    if(newStatus == true){
+      console.log("SDFASDFASDFADF")
+      this.orderService.updateStatus(orderId, 4).subscribe((data)=>{});
+    }
+
   }
 
   cancelOrder(id: string){

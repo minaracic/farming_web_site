@@ -1,6 +1,7 @@
 import { Articl } from './articl';
 
 export interface ArticlInStorage{
+  _id: String,
   gardenId: String,
   articlId: String,
   enterprise:String,

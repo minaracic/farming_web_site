@@ -6,5 +6,6 @@ export interface Articl{
   name:String,
   score: Number,
   qnt: Number,
-  available: Boolean
+  available: Boolean,
+  totalGrowDays: Number
 }

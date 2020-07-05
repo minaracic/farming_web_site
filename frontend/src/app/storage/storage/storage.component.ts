@@ -37,14 +37,7 @@ export class StorageComponent implements OnInit, OnDestroy{
             protected seedService: SeedService,
             protected orderService: OrderService,
             protected articleService: ArticlService,
-            protected storageArticlsService: StorageArticlsService) {
-              // this.gardenDetailsCmp = new GardenDetailsComponent(router, gardenService, seedService, orderService, articleService, enterpriseService);
-
-              // this.gardenDetailsCmp.eventEmitter.on("articlesObj2", (data)=>{
-              //   // this.articlesObj2 = data;
-              //   console.log("articlesObj2", data);
-              // })
-            }
+            protected storageArticlsService: StorageArticlsService){}
 
   ngOnDestroy(): void {
     this.dtTrigger.unsubscribe();
@@ -59,9 +52,11 @@ export class StorageComponent implements OnInit, OnDestroy{
   getStorage(){
     this.gardenService.getMyArticles(this.gardenId).subscribe(data=>{
       let articls = data['articls'];
+      console.log(articls);
       let ids: String[] = [];
       for(let i = 0; i < articls.length; i++){
         let a: ArticlInStorage = {
+          _id: articls[i]._id,
           enterprise: "",
           gardenId: this.gardenId,
           articlId: articls[i].articlId,
@@ -104,8 +99,15 @@ export class StorageComponent implements OnInit, OnDestroy{
     }
   }
 
-  seed(id: string){
-    // this.storageArticlsService
+  seed(articl: ArticlInStorage){
+    this.storageArticlsService.getSeed(articl._id.valueOf()).subscribe(data=>{
+      console.log(data);
+      this.storageArticlsService.plantSeed(this.gardenId, articl).subscribe(data=>{
+        if(data['msg'] == 'Ok'){
+          window.alert("Seed planted successfully");
+        }
+      })
+    })
   }
 
   myOrders(){

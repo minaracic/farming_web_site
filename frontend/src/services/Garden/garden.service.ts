@@ -20,49 +20,43 @@ export class GardenService {
     return this.http.get(`${Constats.URI}/updateGardens`);
   }
 
-  getGarden(owner: string, gardenName: string){
+  getGarden(gardenName: string){
     let req = {
-      owner: owner,
       garden: gardenName
     };
     return this.http.post(`${Constats.URI}/getGarden`, req);
   }
 
-  incWaterInGarden(owner:string, gardenName: string){
+  incWaterInGarden(gardenName: string){
     let req = {
-      owner:owner,
       garden: gardenName
     };
     return this.http.post(`${Constats.URI}/incWaterInGarden`, req);
   }
 
-  decWaterInGarden(owner:string, gardenName: string){
+  decWaterInGarden(gardenName: string){
     let req = {
-      owner:owner,
       garden: gardenName
     };
     return this.http.post(`${Constats.URI}/decWaterInGarden`, req);
   }
 
-  incTmpInGarden(owner:string, gardenName: string){
+  incTmpInGarden(gardenName: string){
     let req = {
-      owner:owner,
       garden: gardenName
     };
     return this.http.post(`${Constats.URI}/incTmpInGarden`, req);
   }
 
-  decTmpInGarden(owner:string, gardenName: string){
+  decTmpInGarden(gardenName: string){
     let req = {
-      owner:owner,
       garden: gardenName
     };
     return this.http.post(`${Constats.URI}/decTmpInGarden`, req);
   }
 
-  getAllMySeeds(owner:string, gardenName:string){
+  getAllMySeeds(gardenName:string){
     let req = {
-      owner: owner,
       garden: gardenName
     };
     return this.http.post(`${Constats.URI}/getAllGardensSeeds`, req);

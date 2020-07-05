@@ -33,10 +33,10 @@ export class GardenDetailsComponent implements OnInit {
   numOfRows:number;
   garden: Garden;
 
-  public eventEmitter = new EventEmitter();
-  articlesObj1: ArticlInStorage[];
-  articlesObj2: ArticlInStorage[];
-  orderes: Articl[];
+  // public eventEmitter = new EventEmitter();
+  // articlesObj1: ArticlInStorage[];
+  // articlesObj2: ArticlInStorage[];
+  // orderes: Articl[];
 
   seedDetailsNode: Node;
 
@@ -48,20 +48,17 @@ export class GardenDetailsComponent implements OnInit {
     protected enterpriseService: EnterpriseService) { }
 
   ngOnInit(): void {
-    this.articlesObj1 = [];
-    this.articlesObj2 = [];
 
-    this.owner = this.router.parseUrl(this.router.url).queryParams['owner'];
     this.gardenName = this.router.parseUrl(this.router.url).queryParams['gardenName'];
 
-    this.gardenService.getGarden(this.owner, this.gardenName).subscribe(data=>{
+    this.gardenService.getGarden(this.gardenName).subscribe(data=>{
       this.garden = data['garden'];
       this.water = this.garden.water.valueOf();
       this.tmp = this.garden.temperature.valueOf();
       this.numOfSeeds = this.garden.totalSeeds.valueOf();
       this.gardenId = this.garden._id.valueOf();
 
-      this.gardenService.getAllMySeeds(this.owner, this.gardenName).subscribe(data=>{
+      this.gardenService.getAllMySeeds(this.gardenName).subscribe(data=>{
         this.allSeeds = data['seeds'];
         this.createSeedsTable();
         this.putSeedsInTable();
@@ -106,12 +103,13 @@ export class GardenDetailsComponent implements OnInit {
   }
 
   seedDetails(seed: Seed, event: MouseEvent){
-    window.open("http://localhost:4200/seedProgress?user="+ JSON.stringify(seed));
+    window.open("http://localhost:4200/seedProgress?seedId="+ JSON.stringify(seed._id));
   }
 
   confirmToHarvest(seed: Seed){
     if(confirm("Are you sure you want to harvest this seed?")){
-      seed.harvested = true;
+      this.seedService.setHarvested(seed._id.valueOf()).subscribe((data)=>{})
+
       setTimeout(()=>{
         this.harvestSeed(seed);
       }, Constats.harvestTime);
@@ -120,7 +118,7 @@ export class GardenDetailsComponent implements OnInit {
 
   harvestSeed(seed){
     this.seedService.deleteSeed(seed).subscribe(data=>{
-      this.gardenService.getAllMySeeds(this.owner, this.gardenName).subscribe(data=>{
+      this.gardenService.getAllMySeeds(this.gardenName).subscribe(data=>{
         this.allSeeds = data['seeds'];
         this.createSeedsTable();
         this.putSeedsInTable();

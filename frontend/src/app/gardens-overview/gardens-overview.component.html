@@ -23,16 +23,16 @@
     </td>
     <td>
       {{g.water}}
-      <button class="btn btn-large btn-success" (click)="incWaterInGarden(g.name)">&#43;</button>
-      <button class="btn btn-large btn-warning" (click)="decWaterInGarden(g.name)">&#45;</button>
+      <button class="btn btn-large btn-success" (click)="incWaterInGarden(g._id)">&#43;</button>
+      <button class="btn btn-large btn-warning" (click)="decWaterInGarden(g._id)">&#45;</button>
     </td>
     <td>
       {{g.temperature}}
-      <button class="btn btn-large btn-success" (click)="incTmpInGarden(g.name)">&#43;</button>
-      <button class="btn btn-large btn-warning" (click)="decTmpInGarden(g.name)">&#45;</button>
+      <button class="btn btn-large btn-success" (click)="incTmpInGarden(g._id)">&#43;</button>
+      <button class="btn btn-large btn-warning" (click)="decTmpInGarden(g._id)">&#45;</button>
     </td>
     <td>
-      <button class="btn btn-large btn-info" (click)="getGardenDetails(g.name, g.owner, g.temperature, g.water)">Details</button>
+      <button class="btn btn-large btn-info" (click)="getGardenDetails(g._id)">Details</button>
     </td>
   </tr>
 

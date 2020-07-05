@@ -10,6 +10,7 @@ export class Constats{
 
   public static harvestTime = 24*60*60*1000;
   public static gardenUpdateTime = 60*60*1000;
+  public static seedGrowTime = 24*60*60*1000;
 }
 
 export interface LogInRes{

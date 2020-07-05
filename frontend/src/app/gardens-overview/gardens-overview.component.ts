@@ -21,37 +21,38 @@ export class GardensOverviewComponent implements OnInit {
 
     this.gardenService.getGardensByOwner(this.owner).subscribe(data=>{
       this.gardens = data['gardens'];
+      console.log(this.gardens);
     });
 
 
   }
 
   incWaterInGarden(gardenName: string){
-    this.gardenService.incWaterInGarden(this.owner, gardenName).subscribe(data=>{
+    this.gardenService.incWaterInGarden(gardenName).subscribe(data=>{
 
     })
   }
 
   decWaterInGarden(gardenName: string){
-    this.gardenService.decWaterInGarden(this.owner, gardenName).subscribe(data=>{
+    this.gardenService.decWaterInGarden(gardenName).subscribe(data=>{
 
     })
   }
 
   incTmpInGarden(gardenName: string){
-    this.gardenService.incTmpInGarden(this.owner, gardenName).subscribe(data=>{
+    this.gardenService.incTmpInGarden(gardenName).subscribe(data=>{
 
     })
   }
 
   decTmpInGarden(gardenName: string){
-    this.gardenService.decTmpInGarden(this.owner, gardenName).subscribe(data=>{
+    this.gardenService.decTmpInGarden(gardenName).subscribe(data=>{
 
     })
   }
 
-  getGardenDetails(gardenName: string, owner:string, tmp: number, water: number){
-    this.router.navigate(["/gardenDetails"], {queryParams: {gardenName: gardenName, owner:owner, tmp:tmp, water:water}});
+  getGardenDetails(gardenName: string){
+    this.router.navigate(["/gardenDetails"], {queryParams: {gardenName: gardenName}});
   }
 
 }

@@ -43,11 +43,12 @@ export class OrderService {
     return this.http.post(`${Constats.URI}/getOrdersFromEnterprise`, req);
   }
 
-  updateStatus(orderId: string){
+  updateStatus(orderId: string, status: number){
     let req = {
-      orderId: orderId
+      orderId: orderId,
+      status: status
     };
-    return this.http.post(`${Constats.URI}/updateOrderStatusToWaiting`, req);
+    return this.http.post(`${Constats.URI}/updateOrderStatus`, req);
   }
 
   getOrdersFrom(fromToday: number){

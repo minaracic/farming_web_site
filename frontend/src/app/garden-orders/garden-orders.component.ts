@@ -46,6 +46,7 @@ export class GardenOrdersComponent implements OnInit, OnDestroy {
         let order = orderes[i]['articlIds'];
         for(let j = 0; j < order.length; j++){
           let a: ArticlInStorage = {
+            _id: null,
             gardenId: this.gardenId,
             articlId: order[j],
             enterprise: "",

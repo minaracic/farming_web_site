@@ -1,3 +1,4 @@
+
 <div id="title">Online shop</div>
 <table class="row-border hover"
       datatable
@@ -21,11 +22,17 @@
     <td>
       {{order.dateOfOrder.valueOf()}}
     </td>
-    <td *ngIf="order.status.valueOf() == 1">
+    <td *ngIf="order.status.valueOf() == 1" (click)="changeOrderStatus(order._id)">
       Ordered
     </td>
     <td *ngIf="order.status.valueOf() == 2" style="background-color: indianred;">
       On waiting
+    </td>
+    <td *ngIf="order.status.valueOf() == 3">
+      Active
+    </td>
+    <td *ngIf="order.status.valueOf() == 4">
+      Delivered
     </td>
     <td>
       <button class="btn btn-large btn-success" style= "margin: 4px; font-size: 15px;" (click)="acceptOrder(order._id)">&#9825;</button>

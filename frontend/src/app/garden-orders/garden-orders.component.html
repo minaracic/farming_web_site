@@ -1,4 +1,4 @@
-<div id="title" >Storage</div>
+<div id="title" >Orders</div>
 <table class="row-border hover"
       id="storage"
       datatable
@@ -8,6 +8,7 @@
     <tr>
       <th>Name</th>
       <th>Type</th>
+      <th>Grow days</th>
       <th>Producer</th>
       <th>Status</th>
       <th>Quantity</th>
@@ -18,11 +19,14 @@
 <tbody>
   <tr *ngFor="let a of articlsObj" style="background-color:ivory;">
     <td>{{a.articl.name}}</td>
-    <td style="text-align: center;" *ngIf="a.articl.type == 1">
+    <td style="text-align: center;" *ngIf="a.articl.type.valueOf() == 1">
       Seed
     </td>
-    <td style="text-align: center;" *ngIf="a.articl.type == 2">
+    <td style="text-align: center;" *ngIf="a.articl.type.valueOf() == 2">
       Elixir
+    </td>
+    <td style="text-align: center;">
+      {{a.articl.totalGrowDays}}
     </td>
     <td style="text-align: center;">
       {{a.enterprise}}

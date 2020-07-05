@@ -16,6 +16,7 @@ export class NewArticlComponent implements OnInit {
   type: string;
   qnt: number;
   available: Boolean;
+  totalGrowDays: number;
   price: number;
   articl: Articl;
 
@@ -35,6 +36,7 @@ export class NewArticlComponent implements OnInit {
       price: this.price,
       enterpriseId: id,
       available: this.available,
+      totalGrowDays: this.totalGrowDays,
       score: 0
     }
 
