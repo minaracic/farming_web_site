@@ -29,6 +29,7 @@ import { OrdersChartComponent } from './orders-chart/orders-chart.component';
 import { OrderStatisticComponent } from './order-statistic/order-statistic.component';
 import { ChangePasswordComponent } from './change-password/change-password.component';
 import { GardenOrdersComponent } from './garden-orders/garden-orders.component';
+import { NewGardenComponent } from './new-garden/new-garden.component';
 
 
 @NgModule({
@@ -53,7 +54,8 @@ import { GardenOrdersComponent } from './garden-orders/garden-orders.component';
     OrdersChartComponent,
     OrderStatisticComponent,
     ChangePasswordComponent,
-    GardenOrdersComponent
+    GardenOrdersComponent,
+    NewGardenComponent
   ],
   imports: [
     BrowserModule,

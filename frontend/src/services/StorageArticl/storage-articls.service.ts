@@ -42,6 +42,13 @@ export class StorageArticlsService {
   //   }
   // }
 
+  addArticl(articl){
+    let req = {
+      articl: articl
+    }
+    return this.http.post(`${Constats.URI}/addArticlInStorage`, req);
+  }
+
   getSeed(articlId: string){
     let req={
       articlId: articlId

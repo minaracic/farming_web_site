@@ -7,5 +7,6 @@ export interface Articl{
   score: Number,
   qnt: Number,
   available: Boolean,
+  showAcceptButton: Boolean,
   totalGrowDays: Number
 }

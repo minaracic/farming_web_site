@@ -78,10 +78,10 @@ export class RegistrateFarmerComponent implements OnInit {
   }
 
   registrate(registrateForm: NgForm){
-    // let reg = new RegExp("([a-z](?=.*[A-Z])(?=.*[0-9])(?=.*[-+_!@#$%^&*.,?]))(?=.{6,})|(([A-Z](?=.*[0-9])(?=.*[-+_!@#$%^&*.,?]))(?=.{6,}))");
-    // if(this.password1.match(reg) == null){
-    //   this.errorMsg = "Password must contain at least one uppercase, one number and one special character, at least 7 chars long /n";
-    // }
+    let reg = new RegExp("([a-z](?=.*[A-Z])(?=.*[0-9])(?=.*[-+_!@#$%^&*.,?]))(?=.{6,})|(([A-Z](?=.*[0-9])(?=.*[-+_!@#$%^&*.,?]))(?=.{6,}))");
+    if(this.password1.match(reg) == null){
+      this.errorMsg = "Password must contain at least one uppercase, one number and one special character, at least 7 chars long /n";
+    }
     if(this.password1 != this.password2){
       this.errorMsg += "Passwords don't match \n";
     }

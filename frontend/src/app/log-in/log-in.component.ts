@@ -57,6 +57,7 @@ export class LogInComponent implements OnInit {
       if(data['user'].type == 1){
         this.enterpriseService.getByUsername(data['user'].username).subscribe(data=>{
           localStorage.setItem('user', JSON.stringify(data['user']));
+          document.getElementById("note").style.visibility = "visible";
           this.router.navigate(['/ordersPreview']);
         });
       }

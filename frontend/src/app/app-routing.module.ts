@@ -19,10 +19,13 @@ import { HeaderComponent } from './header/header.component';
 import { OrderStatisticComponent } from './order-statistic/order-statistic.component';
 import { ChangePasswordComponent } from './change-password/change-password.component';
 import { GardenOrdersComponent } from './garden-orders/garden-orders.component';
+import { AppComponent } from './app.component';
+import { NewGardenComponent } from './new-garden/new-garden.component';
 
 
 const routes: Routes = [
   {path: 'admin', component: AdminComponent},
+  {path: '', component: LogInComponent},
   {path: 'logIn', component: LogInComponent},
   {path: 'registrateFarmer', component: RegistrateFarmerComponent},
   {path: 'registrateEnterprise', component: RegistrateEnterpriseComponent},
@@ -39,7 +42,8 @@ const routes: Routes = [
   {path: 'header', component: HeaderComponent},
   {path: 'orderStatistic', component: OrderStatisticComponent},
   {path: 'changePassword', component: ChangePasswordComponent},
-  {path: 'gardenOrder', component: GardenOrdersComponent}
+  {path: 'gardenOrder', component: GardenOrdersComponent},
+  {path: 'newGarden', component: NewGardenComponent},
 ];
 
 @NgModule({

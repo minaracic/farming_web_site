@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { Seed } from 'src/models/seed';
 import { Router } from '@angular/router';
 import { SeedService } from 'src/services/Seed/seed.service';
+import { EnterpriseService } from 'src/services/Enterprise/enterprise.service';
 
 @Component({
   selector: 'app-seed-progress',
@@ -18,14 +19,18 @@ export class SeedProgressComponent implements OnInit {
   valueNow: number;
 
   constructor(public router: Router,
-              public seedService: SeedService) { }
+              public seedService: SeedService,
+              private enterpriseService: EnterpriseService) { }
 
   ngOnInit(): void {
-    this.seedId  = JSON.parse(this.router.parseUrl(this.router.url).queryParams['seedId']);
+    this.seedId  = this.router.parseUrl(this.router.url).queryParams['seedId'];
     this.seedService.getById(this.seedId).subscribe(data=>{
       this.seed = data['seed'];
-      this.valueNow = Number((this.seed.progress.valueOf() / this.seed.totalGrowDays.valueOf() * 100).toFixed(2));
-      this.addDetails();
+      this.enterpriseService.getById(this.seed.producerId.valueOf()).subscribe(data=>{
+        this.seed.producer = data['enterprise'].companyName;
+        this.valueNow = Number((this.seed.progress.valueOf() / this.seed.totalGrowDays.valueOf() * 100).toFixed(2));
+        this.addDetails();
+      })
     })
   }
 
@@ -76,13 +81,13 @@ export class SeedProgressComponent implements OnInit {
     btn.className = "btn btn-large btn-warning";
     btn.innerHTML = "Add elixir";
     btn.style.fontSize = "16px";
-    // btn.onclick = this.addElixir(seed, event);
+    btn.onclick = this.addElixir;
     div.append(btn);
     document.documentElement.append(div);
   }
 
   //todo: implement
   addElixir(){
-
+    console.log("Add elixir ", this.seed);
   }
 }

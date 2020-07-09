@@ -1,6 +1,7 @@
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { Constats } from 'src/constants';
+import { Garden } from 'src/models/garden';
 
 @Injectable({
   providedIn: 'root'
@@ -25,6 +26,10 @@ export class GardenService {
       garden: gardenName
     };
     return this.http.post(`${Constats.URI}/getGarden`, req);
+  }
+
+  getAllGardens(){
+    return this.http.get(`${Constats.URI}/getAllGardens`);
   }
 
   incWaterInGarden(gardenName: string){
@@ -68,5 +73,14 @@ export class GardenService {
     };
 
     return this.http.post(`${Constats.URI}/getStorageArticles`, req);
+  }
+
+  addNew(garden: Garden){
+    let req = {
+      garden: garden
+    };
+
+    return this.http.post(`${Constats.URI}/addNewGarden`, req);
+
   }
 }

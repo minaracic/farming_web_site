@@ -9,13 +9,11 @@
           name="name">
   </div>
   <div class="form-group">
-    <label>Type</label>
-    <input class="form-control"
-          id="type"
-          placeholder="Enter type"
-          [(ngModel)]="type"
-          name="type"
-          required>
+    <label>Type</label><br>
+      <select id="type">
+        <option value=1>Seed</option>
+        <option value=2>Elixir</option>
+      </select>
   </div>
   <div class="form-group">
     <label>Grow days</label>
@@ -29,8 +27,7 @@
   <div class="form-group">
     <label>Available</label>
     <input class="form-control"
-          id="type"
-          placeholder="Enter availability"
+          placeholder="true"
           [(ngModel)]="available"
           name="available"
           required>

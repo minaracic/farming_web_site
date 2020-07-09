@@ -17,6 +17,8 @@ const seed = require("../models/seed");
 
 const app = express();
 
+mongoose.set('useFindAndModify', false);
+
 mongoose.connect("mongodb://localhost/agriculture").then(()=>{
     console.log("Connection established!")
 }).catch(()=>{
@@ -420,9 +422,10 @@ app.post("/addNewArticl", (req, res)=>{
 app.post("/getAPostman", (req, res)=>{
     let id = req.body.id;
     let e = mongoose.Types.ObjectId(id);
-    console.log(e);
     Enterprise.findOneAndUpdate({_id: e}, {$inc:{availablePostman: -1}}).then(data=>{
-
+      res.json({
+        msg: 'Ok'
+      })
     });
 });
 
@@ -431,7 +434,9 @@ app.post("/returnAPostman", (req, res)=>{
     let e = mongoose.Types.ObjectId(id);
 
     Enterprise.findOneAndUpdate({_id: e} ,{ $inc:{availablePostman: 1}}).then(data=>{
-
+      res.json({
+        msg: 'Ok'
+      })
     })
 });
 
@@ -442,19 +447,17 @@ app.post("/updateOrderStatus", (req, res)=>{
 
     Order.findOneAndUpdate({_id: e} ,{ status: status}).then(data=>{
       console.log(data);
-      if(status == 4){
-        for(let i = 0; i < data.articlIds.length; i++){
-            let a = {
-              _id: null,
-              gardenId: data.gardenId,
-              qnt: 1,
-              articlId: data.articlIds[i] 
-            }
-            console.log(a);
-            const aa = ArticlInStorage.create(a);
-            console.log(aa);
-        }
-      }
+      // if(status == 4){
+      //   for(let i = 0; i < data.articlIds.length; i++){
+      //       let a = {
+      //         _id: null,
+      //         gardenId: data.gardenId,
+      //         qnt: 1,
+      //         articlId: data.articlIds[i] 
+      //       }
+      //       const aa = ArticlInStorage.create(a);
+      //   }
+      // }
     })
 });
 
@@ -526,6 +529,9 @@ app.get("/updateGardens", (req, res)=>{
   console.log("updateGardens")
   Garden.updateMany({$inc:{water: -1}, $inc: {temperature: -0.5}}).then(data=>{
     console.log(data);
+    res.json({
+      msg: 'Ok'
+    })
   });
 });
 
@@ -576,11 +582,12 @@ app.get("/updateProgress", (req, res)=>{
 });
 
 app.post("/getSeedById", (req, res)=>{
-  let id = req.body.seedId;
+  let id = req.body.id;
+  console.log(id);
   let e = mongoose.Types.ObjectId(id);
   Seed.findById(e).then(data=>{
     res.json({
-      seed: data[0]
+      seed: data
     })
   });
 });
@@ -596,11 +603,38 @@ app.post("/setHarvested", (req, res)=>{
   });
 });
 
+app.post("/addArticlInStorage", (req, res)=>{
+  let articl = req.body.articl;
+  console.log("/addArticlInStorage");
+  let e = mongoose.Types.ObjectId(articl.gardenId);
+  let a = mongoose.Types.ObjectId(articl.articlId);
+  // ArticlInStorage.findOneAndUpdate({gardenId: e, articlId: a}, {$inc:{qnt: 1}}, (err, doc)=>{
+  //   console.log("Doc => ", doc);
+  //   if(doc == null){
+  //     // ArticlInStorage.create(articl);
+  //   }
+  //   res.json({
+  //     msg: 'Ok'
+  //   })
+  //   console.log(doc);
+  // })
+  ArticlInStorage.findOneAndUpdate({gardenId: e, articlId: a}, {$inc:{qnt: 1}}).then(data=>{
+    console.log("Data ->", data);
+    if(data == null){
+
+      ArticlInStorage.create(articl);
+    }
+    res.json({
+      msg: 'Ok'
+    })
+  });
+  
+});
+
 app.post("/getDistance",(req, res)=>{
-  console.log("getD");
   const client = new Client({});
   let a = req.body.a;
-  let b  =req.body.b;
+  let b =req.body.b;
   client
     .distancematrix({
       params: {
@@ -612,11 +646,33 @@ app.post("/getDistance",(req, res)=>{
     })
     .then((r) => {
       console.log(r.data.rows[0].elements[0].duration);
-      // console.log(r.data.results[0]);
+      res.json({
+        'time': r.data.rows[0].elements[0].duration
+      })
     })
     .catch((e) => {
       console.log(e.response.data.error_message);
     });
+});
 
-})
+app.get("/getAllGardens", (req, res)=>{
+  Garden.find().then(doc=>{
+    console.log(doc);
+    res.json({
+      gardens: doc
+    })
+  })
+});
+
+app.post("/addNewGarden", (req, res)=>{
+  let garden = req.body.garden;
+
+  Garden.create(garden).then(data=>{
+    console.log(data);
+    res.json({
+      msg: 'Ok'
+    })
+  })
+});
+
 app.listen(4000, () => console.log(`Express server running on port 4000`));

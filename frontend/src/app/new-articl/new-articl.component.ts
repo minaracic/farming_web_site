@@ -28,16 +28,19 @@ export class NewArticlComponent implements OnInit {
   newArticl(newArticlForm: NgForm){
     let id = JSON.parse(localStorage.getItem('user'))['_id'];
 
+    let type = $("#type").val();
+
     this.articl = {
       _id: null,
-      type: 2,
+      type: Number(type),
       name: this.name,
       qnt: this.qnt,
       price: this.price,
       enterpriseId: id,
-      available: this.available,
+      available: true,
       totalGrowDays: this.totalGrowDays,
-      score: 0
+      score: 0,
+      showAcceptButton: null
     }
 
     this.articlService.addNewArticl(this.articl).subscribe(data=>{

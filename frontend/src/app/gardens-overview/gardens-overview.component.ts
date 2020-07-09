@@ -21,10 +21,31 @@ export class GardensOverviewComponent implements OnInit {
 
     this.gardenService.getGardensByOwner(this.owner).subscribe(data=>{
       this.gardens = data['gardens'];
-      console.log(this.gardens);
+      for(let i = 0; i < this.gardens.length; i++){
+        let garden:Garden = this.gardens[i];
+
+        if(garden.temperature < 12 || garden.water < 75){
+          this.addNoteToMaintainGarden(garden.name.valueOf());
+        }
+        else{
+          if(document.getElementById(garden.name.valueOf()))
+            document.getElementById(garden.name.valueOf()).remove();
+        }
+
+      }
     });
+  }
 
-
+  addNoteToMaintainGarden(gardenName: string){
+    let div = document.createElement("text");
+    div.innerHTML = gardenName + " needs service";
+    div.id = gardenName;
+    div.style.border = "2px solid";
+    div.style.margin = "2px"
+    console.log(document.getElementById(gardenName))
+    if(document.getElementById(gardenName) == null){
+      document.getElementById("note").append(div);
+    }
   }
 
   incWaterInGarden(gardenName: string){
@@ -53,6 +74,10 @@ export class GardensOverviewComponent implements OnInit {
 
   getGardenDetails(gardenName: string){
     this.router.navigate(["/gardenDetails"], {queryParams: {gardenName: gardenName}});
+  }
+
+  addNewGarden(){
+    this.router.navigate(['newGarden']);
   }
 
 }

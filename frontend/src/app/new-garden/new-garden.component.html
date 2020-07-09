@@ -1,0 +1,38 @@
+<form (ngSubmit) = "newGarden(newGardenForm)" #newGardenForm = "ngForm">
+  <div class="form-group">
+    <label>Name</label>
+    <input class="form-control"
+          id="name"
+          placeholder="Enter name"
+          required
+          [(ngModel)]="name"
+          name="name">
+  </div>
+  <div class="form-group">
+    <label>Place</label>
+    <input class="form-control"
+          placeholder="Enter place"
+          [(ngModel)]="place"
+          name="place"
+          required>
+  </div>
+  <div class="form-group">
+    <label>Width</label>
+    <input class="form-control"
+          placeholder="Enter width"
+          [(ngModel)]="width"
+          name="width"
+          required>
+  </div>
+  <div class="form-group">
+    <label>Height</label>
+    <input class="form-control"
+          id="quantity"
+          placeholder="Enter height"
+          [(ngModel)]="height"
+          name="height"
+          required>
+  </div>
+  <button type="submit" class="btn btn-primary" [disabled]="!newGardenForm.form.valid">Submit</button>
+</form>
+

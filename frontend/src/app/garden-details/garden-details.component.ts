@@ -50,15 +50,16 @@ export class GardenDetailsComponent implements OnInit {
   ngOnInit(): void {
 
     this.gardenName = this.router.parseUrl(this.router.url).queryParams['gardenName'];
-
+    console.log(this.gardenName);
     this.gardenService.getGarden(this.gardenName).subscribe(data=>{
       this.garden = data['garden'];
       this.water = this.garden.water.valueOf();
       this.tmp = this.garden.temperature.valueOf();
       this.numOfSeeds = this.garden.totalSeeds.valueOf();
       this.gardenId = this.garden._id.valueOf();
+      this.gardenName = this.garden.name.valueOf();
 
-      this.gardenService.getAllMySeeds(this.gardenName).subscribe(data=>{
+      this.gardenService.getAllMySeeds(this.gardenId).subscribe(data=>{
         this.allSeeds = data['seeds'];
         this.createSeedsTable();
         this.putSeedsInTable();
@@ -98,12 +99,14 @@ export class GardenDetailsComponent implements OnInit {
     }
   }
 
+  //todo: implement
   addElixir(seed: Seed){
 
   }
 
   seedDetails(seed: Seed, event: MouseEvent){
-    window.open("http://localhost:4200/seedProgress?seedId="+ JSON.stringify(seed._id));
+    console.log(seed);
+    window.open("http://localhost:4200/seedProgress?seedId="+ seed._id);
   }
 
   confirmToHarvest(seed: Seed){
@@ -128,7 +131,6 @@ export class GardenDetailsComponent implements OnInit {
 
   public getMyStorage(){
     this.router.navigate(['/storage'], {queryParams: {gardenId: this.gardenId}});
-
   }
 
 }

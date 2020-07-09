@@ -1,5 +1,5 @@
 
-<div id="title">Online shop</div>
+<div id="title">Orders</div>
 <table class="row-border hover"
       datatable
       [dtOptions]="dtOptions"
@@ -34,9 +34,13 @@
     <td *ngIf="order.status.valueOf() == 4">
       Delivered
     </td>
-    <td>
-      <button class="btn btn-large btn-success" style= "margin: 4px; font-size: 15px;" (click)="acceptOrder(order._id)">&#9825;</button>
+    <td *ngIf="articls[i].showAcceptButton.valueOf() == true">
+      <button class="btn btn-large btn-success" style= "margin: 4px; font-size: 15px;" (click)="acceptOrder(order)">&#9825;</button>
       <button class="btn btn-large btn-warning" style= "margin: 4px; font-size: 15px;" (click)="cancelOrder(order._id)">&#10006;</button>
+    </td>
+    <td *ngIf="articls[i].showAcceptButton.valueOf() == false">
+      <button class="btn btn-large" style= "margin: 4px; font-size: 15px;" ></button>
+      <button class="btn btn-large" style= "margin: 4px; font-size: 15px;" ></button>
     </td>
   </tr>
 </tbody>
